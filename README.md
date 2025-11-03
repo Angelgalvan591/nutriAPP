@@ -130,3 +130,21 @@ FatSecret site and platform API pages.
 
 ## Lo que los usuarios buscan
 <img width="423" height="415" alt="image" src="https://github.com/user-attachments/assets/b5019910-e79e-4b50-b206-c1670c1b7b13" />
+<img width="426" height="417" alt="image" src="https://github.com/user-attachments/assets/cef5d9e9-7ff4-43b2-b60a-0cfa761f079f" />
+<img width="431" height="423" alt="image" src="https://github.com/user-attachments/assets/040d0ae7-b93e-4b59-80da-14c313fba392" />
+<img width="441" height="437" alt="image" src="https://github.com/user-attachments/assets/88b69e8e-b130-44f3-b835-6e95c6a9f229" />
+<img width="427" height="426" alt="image" src="https://github.com/user-attachments/assets/2d9c55c7-1c12-4ec6-bbf3-ab8d43a5e879" />
+<img width="437" height="426" alt="image" src="https://github.com/user-attachments/assets/fa1f1516-25fe-4910-b0f8-02f46d773396" />
+<img width="443" height="417" alt="image" src="https://github.com/user-attachments/assets/3ba88573-add0-47b5-b436-cd8904c0961d" />
+<img width="416" height="416" alt="image" src="https://github.com/user-attachments/assets/505efbdb-78bb-4ef7-bcd1-8d07d48c43d9" />
+<img width="437" height="395" alt="image" src="https://github.com/user-attachments/assets/b01c0b1a-1a1b-4445-9f4a-97382f39f21f" />
+<img width="417" height="416" alt="image" src="https://github.com/user-attachments/assets/d80eaba9-1d7b-42c1-a70a-6a06b9d9436e" />
+<img width="442" height="467" alt="image" src="https://github.com/user-attachments/assets/1d65a875-0300-4e6c-9649-d9c5f75f670d" />
+<img width="416" height="416" alt="image" src="https://github.com/user-attachments/assets/bf936064-2e59-4a68-b27b-7b0b90d20536" />
+<img width="422" height="476" alt="image" src="https://github.com/user-attachments/assets/04643b55-5c35-4f04-a4dd-ab1aff576fd8" />
+<img width="423" height="374" alt="image" src="https://github.com/user-attachments/assets/9c8a4b90-cedd-4b1a-a1d4-821067d12a0c" />
+<img width="442" height="373" alt="image" src="https://github.com/user-attachments/assets/ffe1ba25-4e1e-4f9d-afb9-31008935ad8d" />
+<img width="427" height="393" alt="image" src="https://github.com/user-attachments/assets/1f70903c-b02d-4f07-a6d7-cf37acbf69ff" />
+<img width="428" height="398" alt="image" src="https://github.com/user-attachments/assets/879d39e6-193b-444a-a4c1-339fb4fc01ff" />
+
+
