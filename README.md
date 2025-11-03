@@ -128,3 +128,5 @@ FatSecret site and platform API pages.
 ![diseño3](https://github.com/user-attachments/assets/d2d94e10-a4ab-4417-a344-3ac017b0a513)
 ![diseño4](https://github.com/user-attachments/assets/f6b7caf6-2a2f-4b1e-9cdd-31febdb9a781)
 
+## Lo que los usuarios buscan
+<img width="423" height="415" alt="image" src="https://github.com/user-attachments/assets/b5019910-e79e-4b50-b206-c1670c1b7b13" />
