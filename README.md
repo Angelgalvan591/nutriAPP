@@ -147,4 +147,16 @@ FatSecret site and platform API pages.
 <img width="427" height="393" alt="image" src="https://github.com/user-attachments/assets/1f70903c-b02d-4f07-a6d7-cf37acbf69ff" />
 <img width="428" height="398" alt="image" src="https://github.com/user-attachments/assets/879d39e6-193b-444a-a4c1-339fb4fc01ff" />
 
+## Conclusiones y Oportunidades
 
+### Síntesis de aprendizajes:
+- Existe una demanda estable por apps con base de datos amplia y facilidad de uso.  
+- El segmento profesional/preciso valora micronutrientes y análisis profundo (oportunidad de nicho).  
+- Los usuarios casuales priorizan rapidez, diseño limpio y baja fricción.
+
+### Oportunidades para desarrollo futuro:
+- Interfaz híbrida: modo rápido para principiantes + modo detallado para usuarios avanzados.  
+- Mejora de calidad de base de datos mediante verificación y soporte de marcas.  
+- Política de privacidad y transparencia como ventaja competitiva.  
+- Incluir herramientas de personalización y reportes de micronutrientes para diferenciarse.  
+- Diseñar una app colorida pero agradable visualmente.
