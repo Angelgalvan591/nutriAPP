@@ -123,3 +123,8 @@ FatSecret site and platform API pages.
 ---
 
 ## Diseño de la Encuesta (lista de preguntas)
+![diseño1](https://github.com/user-attachments/assets/39fd1985-0bed-4f8b-ad39-9b4727e4b8cb)
+![diseño2](https://github.com/user-attachments/assets/2e6fd527-c1d8-48aa-8611-d0ef46794d3c)
+![diseño3](https://github.com/user-attachments/assets/d2d94e10-a4ab-4417-a344-3ac017b0a513)
+![diseño4](https://github.com/user-attachments/assets/f6b7caf6-2a2f-4b1e-9cdd-31febdb9a781)
+
