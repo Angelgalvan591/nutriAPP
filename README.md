@@ -22,34 +22,104 @@ Aprobarla materia con una calificación derriba de 8
 - **Foto**:  
 ![angelproo](https://github.com/user-attachments/assets/e511246f-930d-437e-b555-37e58ee9fc82)
 
-# Investigacion realizada para la realizacion de la app
+# Análisis de Mercado y Encuesta para Aplicación Nutricional
 
-![imagen1](images/image1.png)
-![imagen2](images/image2.png)
-![imagen3](images/image3.png)
-![imagen4](images/image4.png)
-![imagen5](images/image5.png)
-![imagen6](images/image6.png)
-![imagen7](images/image7.png)
-![imagen8](images/image8.png)
-![imagen9](images/image9.png)
-![imagen10](images/image10.png)
-![imagen11](images/image11.png)
-![imagen12](images/image12.png)
-![imagen13](images/image13.png)
-![imagen14](images/image14.png)
-![imagen15](images/image15.png)
-![imagen16](images/image16.png)
-![imagen17](images/image17.png)
-![imagen18](images/image18.png)
-![imagen19](images/image19.png)
-![imagen20](images/image20.png)
-![imagen21](images/image21.png)
-![imagen22](images/image22.png)
-![imagen23](images/image23.png)
-![imagen24](images/image24.png)
-![imagen25](images/image25.png)
-![imagen26](images/image26.png)
-![imagen27](images/image27.png)
-![imagen28](images/image28.png)
-![imagen29](images/image29.png)
+## Introducción
+Este informe presenta un análisis comparativo de aplicaciones de nutrición existentes y propone, diseña y entrega una encuesta lista para aplicar a usuarios potenciales.  
+Incluye metodología, análisis de 3 aplicaciones seleccionadas, diseño de encuesta (15 preguntas), justificación de las preguntas, instrucciones de aplicación y recomendaciones para la futura aplicación.
+
+## Análisis de Aplicaciones (3 seleccionadas)
+
+### 1) MyFitnessPal
+
+**Funcionalidades principales:**  
+Registro de alimentos (base de datos amplia), conteo de calorías y macronutrientes, integración con apps y wearables, escáner de código de barras.
+
+**Experiencia de usuario:**  
+Interfaz intuitiva, enfocada en el conteo rápido; amplia comunidad y recursos.
+
+**Modelo de negocio:**  
+Freemium (funciones básicas gratis, suscripción Premium con análisis avanzados, sin anuncios y metas personalizadas).
+
+**Puntos fuertes:**  
+Enorme base de datos de alimentos, facilidad de uso y comunidad.
+
+**Puntos débiles:**  
+La calidad de algunos alimentos cargados por usuarios puede variar; preocupaciones históricas sobre privacidad de datos.
+
+**Características innovadoras:**  
+Amplias integraciones, objetivos personalizados y gran ecosistema.
+
+**Fuentes clave:**  
+MyFitnessPal (sitio oficial y blog), análisis de negocio 2024–2025.
+
+**Citas web principales:**  
+Información sobre la base de datos y modelo freemium.  
+*(MyFitnessPal official / business analysis).*
+
+**Referencias:**  
+MyFitnessPal - cómo funciona y su base de datos.
+
+---
+
+### 2) Cronometer
+
+**Funcionalidades principales:**  
+Seguimiento detallado de macro y micronutrientes, base de datos verificada, escáner de código de barras, integración con wearables y dispositivos médicos.
+
+**Experiencia de usuario:**  
+Orientada a usuarios que requieren precisión nutricional (ej. profesionales de la salud). Interfaz algo más técnica.
+
+**Modelo de negocio:**  
+Versión básica gratuita muy completa; suscripción Pro para funcionalidades profesionales y análisis avanzados.
+
+**Puntos fuertes:**  
+Precisión en micronutrientes, enfoque científico y opciones para profesionales de la salud.
+
+**Puntos débiles:**  
+Curva de aprendizaje para usuarios casuales; apariencia menos “amigable” para principiantes.
+
+**Características innovadoras:**  
+Análisis profundo de micronutrientes, compatibilidad con dispositivos y seguimiento de biométricos.
+
+**Fuentes clave:**  
+Sitio oficial Cronometer y artículos sobre funciones Pro y actualizaciones.
+
+---
+
+### 3) FatSecret
+
+**Funcionalidades principales:**  
+Contador de calorías, comunidad, registro de peso, escáner de código de barras; potente API y base de datos para desarrolladores.
+
+**Experiencia de usuario:**  
+Limpia y accesible; fuerte componente comunitario.
+
+**Modelo de negocio:**  
+Core gratuito, con opción Premium (datos y funcionalidades adicionales) y servicios API comerciales.
+
+**Puntos fuertes:**  
+Base de datos global grande y API para integraciones; opción sin costo para la mayoría de funciones.
+
+**Puntos débiles:**  
+Menos enfoque en micronutrientes detallados que Cronometer; experiencia puede variar por país.
+
+**Características innovadoras:**  
+Plataforma API y herramientas para marcas para gestionar datos nutricionales.
+
+**Fuentes clave:**  
+FatSecret site and platform API pages.
+
+---
+
+## Tabla comparativa resumen
+
+| App          | Funcionalidades principales                         | UX                  | Modelo de negocio              | Fortalezas / Debilidades                            |
+|---------------|----------------------------------------------------|--------------------|--------------------------------|-----------------------------------------------------|
+| **MyFitnessPal** | Conteo calorías, DB grande, integración wearables | Intuitiva, social  | Freemium (Premium)              | + DB / + comunidad; - calidad de entradas y privacidad |
+| **Cronometer**   | Micro y macro, DB verificada, análisis           | Técnica, precisa   | Gratis básica / Pro             | + precisión nutricional; - curva de aprendizaje      |
+| **FatSecret**    | Calorías, comunidad, API                         | Accesible, social  | Gratis / Premium / API comercial | + API y datos globales; - menos foco en micronutrientes |
+
+---
+
+## Diseño de la Encuesta (lista de preguntas)
