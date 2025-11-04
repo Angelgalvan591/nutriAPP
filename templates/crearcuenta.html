@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<form>
+    <div class="container my-4" style="max-width: 400px;">
+        <h2 class="mb-4">Crear Cuenta</h2>
+        <div class="mb-3">
+        <label for="username" class="form-label">Nombre de usuario</label>
+        <input type="text" class="form-control" id="username" placeholder="Ingrese su nombre de usuario">
+        </div>
+        <div class="mb-3">
+        <label for="email" class="form-label">Correo electrónico</label>
+        <input type="email" class="form-control" id="email" placeholder="Ingrese su correo electrónico">
+        </div>
+        <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña">
+        </div>
+        <button type="submit" class="btn btn-primary">Crear Cuenta</button>
+    </div>
+</form>
+{% endblock %}

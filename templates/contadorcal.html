@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-4">
+    <h2 class="mb-4">Contador Calórico</h2>
+    <form>
+        <div class="mb-3">
+            <label for="foodItem" class="form-label">Alimento</label>
+            <input type="text" class="form-control" id="foodItem" placeholder="Ingrese el alimento">
+        </div>
+        <div class="mb-3">
+            <label for="calories" class="form-label">Calorías</label>
+            <input type="number" class="form-control" id="calories" placeholder="Ingrese las calorías">
+        </div>
+        <button type="submit" class="btn btn-primary">Agregar</button>
+    </form>
+
+    <hr>
+
+    <h3>Resumen de Calorías</h3>
+    <p>Total de calorías consumidas: <strong>0</strong></p>
+    <ul class="list-group">
+    </ul>
+</div>
+{% endblock %}

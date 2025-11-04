@@ -1,5 +1,100 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Welcome to the Home Page</h1>
+<div class="container my-4">
+  <div class="row g-3">
+
+    <!-- Columna izquierda -->
+    <div class="col-md-3">
+    
+      <div class="card mb-3">
+        <div class="card-header text-white" style="background-color: #6d82dfff;">Caloris consumidas</div>
+        <div class="card-body">
+          <p>tus calorias consumidas son:</p>
+          <a herf="{{url_for('contadorcal')}}" class="btn btn-primary">ingresar otro alimento</a>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header text-white" style="background-color: #6d82dfff;">Linkbase</div>
+        <div class="card-body">
+          <p>Contenido 2...</p>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header text-white" style="background-color: #6d82dfff;">Otra card</div>
+        <div class="card-body">
+          <p>Y más contenido aquí.</p>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header text-white" style="background-color: #6d82dfff;">Otra card</div>
+        <div class="card-body">
+          <p>Y más contenido aquí.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Columna central -->
+    <div class="col-md-6">
+      
+      <div class="card mb-3">
+        <div class="card-header text-white" style="background-color: #6d82dfff;">Recetas</div>
+        <div class="card-body">
+          <div class="text-center mb-3">
+            <img src="https://i.pinimg.com/1200x/33/f3/47/33f347eb626e7f5a012b6fce01476ad1.jpg"  style="height: 300px; width: 300px;" class="card-img" alt="Imagen de recetas">
+          </div>
+          <p>Explora nuestras deliciosas recetas saludables y fáciles de preparar para cada ocasión.</p>
+          <div class="d-grid gap-2">
+          <a href="{{url_for('recetas')}}" class="btn btn-primary">Ver Recetas</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header text-white" style="background-color: #6d82dfff;">Arte de los Usuaris</div>
+        <img src="{{url_for('static', filename='img/nutria.png')}}" class="card-img-top" alt="">
+        <div class="card-body">
+          <p>Información de la obra</p>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header text-white" style="background-color: #6d82dfff;">Otro bloque</div>
+        <div class="card-body">
+          <p>Contenido adicional.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna derecha -->
+    <div class="col-md-3">
+      <div class="card mb-3">
+        <div class="card-header text-white" style="background-color: #6d82dfff;">¿Ya tienes una cuenta?</div>
+        <div class="card-body">
+          <p>Inicia sesión para más funciones.</p>
+          <div class="d-grid gap-2">
+            <a href="{{url_for('iniciosesion')}}" class="btn btn-primary">Iniciar sesión</a>
+            <a href="{{url_for('crearcuenta')}}" class="btn btn-secondary">Registrarse</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header text-white" style="background-color: #6d82dfff;">contacto</div>
+        <div class="card-body">
+          <p>Si te comunicas con nosotros por estas redes tienes un 50% mas de probabilidad de tener respuesta rapido:</p>
+            <a href="https://www.facebook.com/angel.galvan.37550">Facebook De Nutria</a>
+            <a href="https://www.facebook.com/yui.chan.uwu.awuadecanela">Facebook De Mapache</a>
+            <a href="https://www.instagram.com/justt_ang17/">Instagram De Nutria</a>
+            <a href="https://www.instagram.com/dann._.zpt/">Instagram De Mapache</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 {% endblock %}
