@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<form class="container my-4 font-monospace" style="max-width: 400px;">
+  <div class="border border-dark bg-white p-4 rounded-0">
+    <h2 class="text-success text-uppercase mb-4" style="font-family: 'Jersey 20', sans-serif;">
+      Iniciar Sesión
+    </h2>
+
+    <div class="mb-3">
+      <label for="username" class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+        Nombre de usuario
+      </label>
+      <input type="text" class="form-control form-control-sm border border-dark rounded-0" id="username"
+        placeholder="Ingrese su nombre de usuario">
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+        Contraseña
+      </label>
+      <input type="password" class="form-control form-control-sm border border-dark rounded-0" id="password"
+        placeholder="Ingrese su contraseña">
+    </div>
+
+    <button type="submit" class="btn btn-sm btn-outline-dark text-uppercase"
+      style="font-family: 'Jersey 20', sans-serif;">
+      Iniciar Sesión
+    </button>
+  </div>
+</form>
+{% endblock %}

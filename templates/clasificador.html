@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-4 font-monospace">
+  <div class="border border-dark bg-white p-4 rounded-0"">
+    <div class="bg-light bg-opacity-75 p-3 rounded-0">
+      <div class="text-center mb-4">
+        <h2 class="text-success text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+          Clasificador de Macronutrientes
+        </h2>
+        <p class="text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+          Ingrese los datos nutricionales del alimento para clasificarlo
+        </p>
+      </div>
+
+      <form method="POST" class="row g-3">
+        <div class="col-md-4">
+          <input type="text" name="nombre" class="form-control form-control-sm border border-dark rounded-0" placeholder="Nombre del alimento" required>
+        </div>
+        <div class="col-md-2">
+          <input type="number" name="grasas" step="0.1" class="form-control form-control-sm border border-dark rounded-0" placeholder="Grasas (g)" required>
+        </div>
+        <div class="col-md-2">
+          <input type="number" name="proteinas" step="0.1" class="form-control form-control-sm border border-dark rounded-0" placeholder="Proteínas (g)" required>
+        </div>
+        <div class="col-md-2">
+          <input type="number" name="carbohidratos" step="0.1" class="form-control form-control-sm border border-dark rounded-0" placeholder="Carbohidratos (g)" required>
+        </div>
+        <div class="col-md-2 d-grid">
+          <button type="submit" class="btn btn-sm btn-warning text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Clasificar</button>
+        </div>
+      </form>
+    </div>
+
+    {% if alimentos_clasificados %}
+    <div class="card mt-4 border border-dark rounded-0">
+      <div class="card-header bg-warning text-white text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+        Alimentos Clasificados
+      </div>
+      <div class="card-body bg-light bg-opacity-75">
+        <table class="table table-striped table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th>Alimento</th>
+              <th>Clasificación</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for a in alimentos_clasificados %}
+            <tr>
+              <td>{{ a.nombre }}</td>
+              <td>{{ a.clasificacion }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <form method="POST" action="{{ url_for('limpiar_lista') }}" class="text-end mt-3">
+          <button type="submit" class="btn btn-sm btn-danger text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Limpiar lista</button>
+        </form>
+      </div>
+    </div>
+    {% else %}
+    <div class="alert alert-warning text-center mt-4 text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+      No hay alimentos clasificados aún.
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

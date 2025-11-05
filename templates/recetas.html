@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-4 font-monospace">
+  <div class="border border-dark bg-white p-4 rounded-0">
+    <h2 class="text-success text-uppercase mb-4" style="font-family: 'Jersey 20', sans-serif;">
+      Recetas Saludables
+    </h2>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="col">
+        <div class="card h-100 border border-dark rounded-0">
+          <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Receta 1">
+          <div class="card-body">
+            <h5 class="card-title text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Ensalada de Quinoa</h5>
+            <p class="card-text">Una ensalada fresca y nutritiva con quinoa, vegetales y aderezo de limón.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-100 border border-dark rounded-0">
+          <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Receta 2">
+          <div class="card-body">
+            <h5 class="card-title text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Salmón al Horno</h5>
+            <p class="card-text">Salmón jugoso al horno con hierbas frescas y acompañado de espárragos.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-100 border border-dark rounded-0">
+          <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Receta 3">
+          <div class="card-body">
+            <h5 class="card-title text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Batido Verde</h5>
+            <p class="card-text">Un batido energético con espinacas, plátano, manzana y jengibre.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+20&display=swap" rel="stylesheet" />
+    <title>NutriAPP</title>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body class="bg-success bg-opacity-25 font-monospace">
+
+    <nav class="navbar navbar-expand-lg bg-primary border border-dark rounded-0">
+      <div class="container-fluid">
+        <a class="navbar-brand text-light text-uppercase" style="font-family: 'Jersey 20', sans-serif;" href="#">NutriApp</a>
+        <button class="navbar-toggler bg-dark" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+  <li class="nav-item">
+    <a class="nav-link active text-light text-uppercase" style="font-family: 'Jersey 20', sans-serif;" href="{{url_for('index')}}">Inicio</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-light text-uppercase" style="font-family: 'Jersey 20', sans-serif;" href="{{url_for('recetas')}}">Recetas</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-light text-uppercase" style="font-family: 'Jersey 20', sans-serif;" href="{{url_for('contadorcal')}}">Contador calórico</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-light text-uppercase" style="font-family: 'Jersey 20', sans-serif;" href="{{url_for('gastoenergetico')}}">Gasto energético</a>
+  </li>
+   <li class="nav-item">
+  <a class="nav-link text-light text-uppercase" style="font-family: 'Jersey 20', sans-serif;" href="{{url_for('clasificador')}}">Clasificador</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link text-light text-uppercase" style="font-family: 'Jersey 20', sans-serif;" href="{{url_for('contacto')}}">Contacto</a>
+</li>
+</ul>
+
+          <form class="d-flex me-3" role="search">
+            <input class="form-control form-control-sm border border-dark rounded-0 me-2 bg-light text-dark"
+              type="search" placeholder="Buscar" aria-label="Search" />
+            <button class="btn btn-sm btn-outline-light text-dark text-uppercase border border-dark"
+              style="font-family: 'Jersey 20', sans-serif;" type="submit">
+              Buscar
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <section class="m-3 p-3 bg-white border border-dark rounded-0">
+      <h1 class="text-success text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+        Bienvenido a NutriApp 
+      </h1>
+      {% block content %}
+      {% endblock %}
+    </section>
+
+
+<div id="recordatorioCard" class="position-fixed bottom-0 start-50 translate-middle-x mb-3" style="z-index: 999;">
+  <div class="card border-dark rounded-0 bg-light" style="width: 100%; max-width: 400px;">
+    <div class="card-body text-center p-2">
+      <p id="recordatorioTexto" class="mb-0 text-success text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+        ¡Hora de beber agua!
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const recordatorios = [
+    "¡Hora de beber agua!",
+    "¿Ya comiste algo nutritivo hoy?",
+    "Recuerda incluir vegetales en tu comida 🍃",
+    "Levántate y estírate un poco 🧘",
+    "Un paseo corto también cuenta como actividad física 🚶",
+    "Tu cuerpo te agradecerá una buena elección alimenticia 💚"
+  ];
+  let rIndex = 0;
+  const recordatorioTexto = document.getElementById('recordatorioTexto');
+
+  setInterval(() => {
+    rIndex = (rIndex + 1) % recordatorios.length;
+    recordatorioTexto.textContent = recordatorios[rIndex];
+  }, 5000); 
+</script>
+
+
+  </body>
+</html>
