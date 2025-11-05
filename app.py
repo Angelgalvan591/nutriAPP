@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
+app.config['SECRET_KEY']='una_clave_secreta_muy_larga_y_compleja_1234567890'
+
 # Datos globales
 alimentos_caloricos = [
     {'nombre': 'Manzana', 'calorias': 52},
@@ -62,12 +64,17 @@ def limpiar_lista():
     alimentos_clasificados.clear()
     return redirect(url_for('clasificador'))
 
-@app.route('/iniciosesion')
+@app.route('/iniciosesion' , methods=['GET', 'POST'])
 def iniciosesion():
     return render_template('iniciosesion.html')
 
-@app.route('/crearcuenta')
+@app.route('/crearcuenta', methods=['GET', 'POST'])
 def crearcuenta():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        correo = request.form['correo']
+        contrasena = request.form['contrasena']
+        return redirect(url_for('index'))
     return render_template('crearcuenta.html')
 
 @app.route('/gastoenergetico', methods=['GET', 'POST'])

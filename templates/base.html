@@ -14,11 +14,6 @@
       rel="stylesheet"
     />
     <title>NutriAPP</title>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
   </head>
 
   <body style="background-color: #179999ff;">
@@ -92,22 +87,30 @@
                 href="{{url_for('clasificador')}}">Para saber mas</a>
             </li>
           </ul>
-
-          <form class="d-flex me-3" role="search">
-            <input
-              class="form-control form-control-sm border border-dark rounded-0 me-2 bg-light text-dark"
-              type="search"
-              placeholder="Buscar"
-              aria-label="Search"
-            />
+          <div class="dropdown">
             <button
-              class="btn btn-sm btn-outline-light text-white text-uppercase border border-dark"
-              style="font-family: 'Jersey 20', sans-serif"
-              type="submit"
+              class="btn btn-outline-light dropdown-toggle text-uppercase"
+              type="button"
+              id="userMenuButton"
+              data-bs-toggle="dropdown"
+              aria-expanded="true"
+              style="font-family: 'Jersey 20', sans-serif;"
             >
-              Buscar
+              Usuario
             </button>
-          </form>
+            <ul class="dropdown-menu dropdown-menu-end border-dark" aria-labelledby="userMenuButton">
+              <li>
+                <a class="dropdown-item text-uppercase" href="{{url_for('iniciosesion')}}">Iniciar sesión</a>
+              </li>
+              <li>
+                <a class="dropdown-item text-uppercase" href="{{url_for('crearcuenta')}}">Crear cuenta</a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item text-uppercase text-danger" href="#">Cerrar sesión</a>
+              </li>
+            </ul>
+          </div>
           
         </div>
       </div>
