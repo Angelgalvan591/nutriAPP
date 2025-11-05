@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
+<h1 class="text-success text-uppercase text-center" style="font-family: 'Jersey 20', sans-serif;">
+        Bienvenido a NutriApp 
+      </h1>
 <div class="container my-4 font-monospace">
   <div class="row g-3">
 
@@ -8,23 +11,25 @@
 
       <div class="card mb-3 border border-dark rounded-0">
         <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">
-          Calorías consumidas
+         ¿Con que funciones cuenta NutriApp?
         </div>
         <div class="card-body">
-          <p>Puedes ingresar tus calorias consumidas</p>
-          <div class="d-grid gap-2">
-          <a href="{{url_for('contadorcal')}}" class="btn btn-sm btn-outline-dark text-uppercase" style="font-family: 'Jersey 20', sans-serif;">¡Aqui!</a>
-          </div>
+          <p>NutriApp te ofrece las siguientes funciones:</p>
+          <ul>
+            <li>Contador de calorias</li>
+            <li>Calculadora de gasto energetico</li>
+            <li>Recetas saludables</li>
+            <li>Aarticulos para saber mas</li>
+            <li>Lienzo interactivo para crear arte</li>
+          </ul>
         </div>
       </div>
 
       <div class="card mb-3 border border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">Gasto energetico</div>
+        <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">Informacion del usuario</div>
         <div class="card-body">
-          <p>¿Quieres saber cual es tu gasto energetico?</p>
-          <div class="d-grid gap-2">
-            <a href="{{url_for('gastoenergetico')}}" class="btn btn-sm btn-outline-dark text-uppercase" style="font-family: 'Jersey 20', sans-serif;">¡Aqui!</a>
-          </div>
+          <p>Tu informacion estra protegida con nosotros, siendo usada solo para ayudarte a lograr tus metas.</p>
+          <p>¡Tu salud y privacidad son nuestra prioridad!</p>
         </div>
       </div>
 
@@ -34,15 +39,14 @@
     <div class="col-md-6">
 
       <div class="card mb-3 border border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #05c075ff; font-family: 'Jersey 20', sans-serif;">Recetas</div>
+        <div class="card-header text-white text-uppercase" style="background-color: #05c075ff; font-family: 'Jersey 20', sans-serif;">¿Que es NutriApp?</div>
         <div class="card-body">
           <div class="text-center mb-3">
-            <img src="https://i.pinimg.com/1200x/33/f3/47/33f347eb626e7f5a012b6fce01476ad1.jpg" style="height: 300px; width: 300px;" class="card-img" alt="Imagen de recetas">
           </div>
-          <p>Explora nuestras deliciosas recetas saludables y fáciles de preparar para cada ocasión.</p>
-          <div class="d-grid gap-2">
-            <a href="{{url_for('recetas')}}" class="btn btn-sm btn-outline-dark text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Ver Recetas</a>
-          </div>
+          <p>NutriApp esta pensadaa en ser una alternativa gratuina para las aplicaciones nutricionales de Pago que usualmente estan fuera del presupuesto de la mayoria de usuarios.
+            Con NutriApp podras llevar un control de tus calorias consumidas, conocer tu gasto energetico diario, encontrar recetas saludables y divertirte creando tu propio arte en nuestro lienzo interactivo.
+            Todo esto sin ningun costo, porque creemos que el acceso a herramientas para una vida saludable debe ser para todos.
+          </p>
         </div>
       </div>
 
@@ -84,6 +88,14 @@
       </div>
 
       <div class="card mb-3 border border-dark rounded-0">
+        <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">Nuestro plan de recetas</div>
+        <div class="card-body">
+          <p>Estamos trabajando para ampliar nuestra base de datos de recetas saludables aun si eres nuevo cocinando o eres todo un chef experto. Podrás disfrutar de una variedad aún mayor de opciones deliciosas, nutritivas y que requieren pocos o varios ingredientes dependiendo la complejidad.</p>
+        </div>
+      </div>
+    </nav>
+
+    <div class="card mb-3 border border-dark rounded-0">
         <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">Contacto</div>
         <div class="card-body">
           <p>Si te comunicas con nosotros por estas redes tienes un 50% más de probabilidad de tener respuesta rápido:</p>
@@ -97,6 +109,8 @@
       </div>
     </nav>
 
+  </div>
+</div>
 
 <script>
   const canvas = document.getElementById("dibujo");
