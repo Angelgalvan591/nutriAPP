@@ -78,7 +78,10 @@ def crearcuenta():
         contraseña = request.form['contraseña']
         edad = request.form['edad']
         sexo = request.form['sexo']
-        confirmar_contraseña = request.form['confirmar_contrasena']
+        peso = request.form['peso']
+        altura = request.form['altura']
+        nivel_actividad = request.form['nivel_actividad']
+        objetivo = request.form['objetivo']
         flash('Cuenta creada exitosamente. ¡Bienvenido, {}!'.format(nombre), 'success')
         return redirect(url_for('index'))
     return render_template('crearcuenta.html')
@@ -103,10 +106,6 @@ def gastoenergetico():
         return render_template('gastoenergetico.html', tmb=tmb, resultado=resultado)
 
     return render_template('gastoenergetico.html')
-
-@app.route('/inisiarsesion', methods=['GET', 'POST'])
-def inisiarsesion():
-    return render_template('inisiarsesion.html')
 
 @app.route('/sabermas')
 def sabermas():
