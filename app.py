@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 
 app = Flask(__name__)
 
@@ -65,25 +65,31 @@ def limpiar_lista():
     alimentos_clasificados.clear()
     return redirect(url_for('clasificador'))
 
-@app.route('/iniciosesion' , methods=['GET', 'POST'])
+@app.route('/iniciosesion', methods=['GET', 'POST'])
 def iniciosesion():
+    if request.method == 'POST':
+        correo = request.form['correo']
+        contrasena = request.form['contrasena']
     return render_template('iniciosesion.html')
 
 @app.route('/crearcuenta', methods=['GET', 'POST'])
 def crearcuenta():
     if request.method == 'POST':
         nombre = request.form['nombre']
-        apellido = request.form['apellido']
         correo = request.form['correo']
-        contraseña = request.form['contraseña']
-        edad = request.form['edad']
-        sexo = request.form['sexo']
-        peso = request.form['peso']
-        altura = request.form['altura']
-        nivel_actividad = request.form['nivel_actividad']
-        objetivo = request.form['objetivo']
+        contrasena = request.form['contrasena']
+        confirmar = request.form['confirmar_contrasena']
+
+        if not nombre or not correo or not contrasena:
+            flash("Por favor, completa todos los campos.", "warning")
+            return render_template('crearcuenta.html')
+
+        if contrasena != confirmar:
+            flash("Las contraseñas no coinciden.", "danger")
+            return render_template('crearcuenta.html')
+
         flash('Cuenta creada exitosamente. ¡Bienvenido, {}!'.format(nombre), 'success')
-        return redirect(url_for('index'))
+        return redirect(url_for('perfil'))
     return render_template('crearcuenta.html')
 
 @app.route('/gastoenergetico', methods=['GET', 'POST'])
@@ -106,6 +112,10 @@ def gastoenergetico():
         return render_template('gastoenergetico.html', tmb=tmb, resultado=resultado)
 
     return render_template('gastoenergetico.html')
+
+@app.route('/perfil')
+def perfil():
+    return render_template('perfil.html')
 
 @app.route('/sabermas')
 def sabermas():
