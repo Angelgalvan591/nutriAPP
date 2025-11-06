@@ -1,41 +1,112 @@
 {% extends "base.html" %}
 {% block content %}
-<form>
-  <div class="container my-4 font-monospace" style="max-width: 400px;">
-    <div class="border border-dark bg-white p-4 rounded-0">
-      <h2 class="text-success text-uppercase mb-4" style="font-family: 'Jersey 20', sans-serif;">
-        Crear Cuenta
-      </h2>
+<div class="container my-5 font-monospace" style="max-width: 700px;">
+  <div class="border border-dark bg-white p-5 rounded-3 shadow">
+    <h2 class="text-center text-success text-uppercase mb-4" style="font-family: 'Jersey 20', sans-serif;">
+      Crear Cuenta
+    </h2>
 
-      <div class="mb-3">
-        <label for="username" class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
-          Nombre de usuario
-        </label>
-        <input type="text" class="form-control form-control-sm border border-dark rounded-0" id="username"
-          placeholder="Ingrese su nombre de usuario">
+    <form>
+      <!-- Nombre y Apellidos -->
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label for="nombre" class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Nombre</label>
+          <input type="text" class="form-control border border-dark rounded-1" id="nombre" placeholder="Tu nombre">
+        </div>
+        <div class="col-md-6">
+          <label for="apellidos" class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Apellidos</label>
+          <input type="text" class="form-control border border-dark rounded-1" id="apellidos" placeholder="Tus apellidos">
+        </div>
       </div>
 
-      <div class="mb-3">
-        <label for="email" class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
-          Correo electrónico
-        </label>
-        <input type="email" class="form-control form-control-sm border border-dark rounded-0" id="email"
-          placeholder="Ingrese su correo electrónico">
+      <!-- Email y Password -->
+      <div class="row g-3 mt-2">
+        <div class="col-md-6">
+          <label for="email" class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Correo electrónico</label>
+          <input type="email" class="form-control border border-dark rounded-1" id="correo" placeholder="ejemplo@correo.com">
+        </div>
+        <div class="col-md-6">
+          <label for="password" class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Contraseña</label>
+          <input type="password" class="form-control border border-dark rounded-1" id="contraseña" placeholder="********">
+        </div>
       </div>
 
-      <div class="mb-3">
-        <label for="password" class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
-          Contraseña
-        </label>
-        <input type="password" class="form-control form-control-sm border border-dark rounded-0" id="password"
-          placeholder="Ingrese su contraseña">
+      <!-- Datos físicos -->
+      <div class="row g-3 mt-3">
+        <div class="col-md-3">
+          <label for="edad" class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Edad</label>
+          <input type="number" class="form-control border border-dark rounded-1" id="edad" placeholder="Años">
+        </div>
+        <div class="col-md-3">
+          <label for="sexo" class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Sexo</label>
+          <select class="form-select border border-dark rounded-1" id="sexo">
+            <option value="">Seleccionar</option>
+            <option>Femenino</option>
+            <option>Masculino</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="peso" class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Peso (kg)</label>
+          <input type="number" class="form-control border border-dark rounded-1" id="peso" placeholder="Ej. 60">
+        </div>
+        <div class="col-md-3">
+          <label for="altura" class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Altura (cm)</label>
+          <input type="number" class="form-control border border-dark rounded-1" id="altura" placeholder="Ej. 165">
+        </div>
       </div>
 
-      <button type="submit" class="btn btn-sm btn-outline-dark text-uppercase"
-        style="font-family: 'Jersey 20', sans-serif;">
-        Crear Cuenta
-      </button>
-    </div>
+      <!-- Nivel de actividad -->
+      <div class="mt-3">
+        <label for="actividad" class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Nivel de actividad física</label>
+        <select class="form-select border border-dark rounded-1" id="actividad">
+          <option value="">Seleccionar</option>
+          <option>Sedentario</option>
+          <option>Ligero</option>
+          <option>Moderado</option>
+          <option>Activo</option>
+          <option>Muy activo</option>
+        </select>
+      </div>
+
+      <!-- Objetivos -->
+      <div class="mt-4">
+        <label class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Objetivos</label>
+        <select class="form-select border border-dark rounded-1">
+          <option value="">Selecciona tu objetivo</option>
+          <option>Bajar de peso</option>
+          <option>Aumentar masa muscular</option>
+          <option>Mantener peso</option>
+          <option>Mejorar digestión</option>
+          <option>Controlar condición (diabetes, hipertensión, etc.)</option>
+        </select>
+      </div>
+
+      <!-- Preferencias y Restricciones -->
+      <div class="mt-4">
+        <label class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Preferencias y restricciones</label>
+        <textarea class="form-control border border-dark rounded-1" rows="3" placeholder="Alergias, intolerancias o dietas específicas..."></textarea>
+      </div>
+
+      <!-- Nivel de experiencia -->
+      <div class="mt-4">
+        <label class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Nivel de experiencia culinaria</label>
+        <select class="form-select border border-dark rounded-1">
+          <option value="">Seleccionar</option>
+          <option>Principiante</option>
+          <option>Intermedio</option>
+          <option>Chef aficionado</option>
+        </select>
+      </div>
+
+      <!-- Botón -->
+      <div class="text-center mt-5">
+        <button type="submit" class="btn btn-outline-success px-5 py-2 text-uppercase fw-bold border-2 rounded-2"
+          style="font-family: 'Jersey 20', sans-serif;">
+          Crear cuenta
+        </button>
+      </div>
+    </form>
   </div>
-</form>
+</div>
 {% endblock %}

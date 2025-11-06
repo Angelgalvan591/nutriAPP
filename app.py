@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY']='una_clave_secreta_muy_larga_y_compleja_1234567890'
 
 # Datos globales
+
 alimentos_caloricos = [
     {'nombre': 'Manzana', 'calorias': 52},
     {'nombre': 'Pan integral', 'calorias': 69},
@@ -72,8 +73,13 @@ def iniciosesion():
 def crearcuenta():
     if request.method == 'POST':
         nombre = request.form['nombre']
+        apellido = request.form['apellido']
         correo = request.form['correo']
-        contrasena = request.form['contrasena']
+        contraseña = request.form['contraseña']
+        edad = request.form['edad']
+        sexo = request.form['sexo']
+        confirmar_contraseña = request.form['confirmar_contrasena']
+        flash('Cuenta creada exitosamente. ¡Bienvenido, {}!'.format(nombre), 'success')
         return redirect(url_for('index'))
     return render_template('crearcuenta.html')
 
@@ -98,9 +104,13 @@ def gastoenergetico():
 
     return render_template('gastoenergetico.html')
 
-@app.route('/contacto')
-def contacto():
-    return render_template('contacto.html')
+@app.route('/inisiarsesion', methods=['GET', 'POST'])
+def inisiarsesion():
+    return render_template('inisiarsesion.html')
+
+@app.route('/sabermas')
+def sabermas():
+    return render_template('sabermas.html')
 
 
 if __name__ == '__main__':
