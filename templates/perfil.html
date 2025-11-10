@@ -1,4 +1,4 @@
-{% {% extends "base.html" %}%}
+{% extends "base.html" %}
 {% block content %}
 <div class="container my-5 font-monospace" style="max-width: 700px;">
   <div class="border border-dark bg-white p-5 rounded-3 shadow">
@@ -7,19 +7,25 @@
     </h2>
 
     <div class="mb-4">
-      <h4 class="text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Información Personal</h4>
-      <p><strong>Nombre:</strong> {{'nombre'}}</p>
-      <p><strong>Correo Electrónico:</strong>
-        {{'correo'}}</p>
-      <p><strong>Edad:</strong> {{'edad'}} años</p>
-        <p><strong>Sexo:</strong> {{'sexo'}}</p>
-        <p><strong>Peso:</strong> {{'peso'}} kg</p>
-        <p><strong>Altura:</strong> {{'altura'}} cm</p>
+      <h4 class="text-uppercase">Información Personal</h4>
+      <p><strong>Nombre:</strong> {{ usuario.nombre }} {{ usuario.apellidos }}</p>
+      <p><strong>Correo:</strong> {{ usuario.correo }}</p>
+      <p><strong>Edad:</strong> {{ usuario.edad }} años</p>
+      <p><strong>Sexo:</strong> {{ usuario.sexo }}</p>
+      <p><strong>Peso:</strong> {{ usuario.peso }} kg</p>
+      <p><strong>Altura:</strong> {{ usuario.altura }} cm</p>
     </div>
+
     <div>
-      <h4 class="text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Objetivos de Salud</h4>
-      <p><strong>Nivel de Actividad Física:</strong> {{'nivel_actividad'}}</p>
-      <p><strong>Objetivo:</strong> {{'objetivo'}}</p>
+      <h4 class="text-uppercase">Objetivos y Actividad</h4>
+      <p><strong>Nivel de Actividad:</strong> {{ usuario.actividad }}</p>
+      <p><strong>Objetivo:</strong> {{ usuario.objetivo }}</p>
+      <p><strong>Preferencias/Restricciones:</strong> {{ usuario.preferencias }}</p>
+      <p><strong>Experiencia culinaria:</strong> {{ usuario.experiencia }}</p>
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="{{ url_for('cerrarsesion') }}" class="btn btn-outline-danger">Cerrar sesión</a>
     </div>
   </div>
 </div>

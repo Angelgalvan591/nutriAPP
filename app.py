@@ -4,8 +4,9 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY']='una_clave_secreta_muy_larga_y_compleja_1234567890'
 
-# Datos globales
+usuarios_db = {}
 
+# Datos globales
 alimentos_caloricos = [
     {'nombre': 'Manzana', 'calorias': 52},
     {'nombre': 'Pan integral', 'calorias': 69},
@@ -68,28 +69,62 @@ def limpiar_lista():
 @app.route('/iniciosesion', methods=['GET', 'POST'])
 def iniciosesion():
     if request.method == 'POST':
-        correo = request.form['correo']
-        contrasena = request.form['contrasena']
+        correo = request.form.get('nombre') 
+        contrasena = request.form.get('contraseña')
+
+        if correo in usuarios_db and usuarios_db[correo]['contrasena'] == contrasena:
+            session['usuario'] = usuarios_db[correo]
+            flash(f'Bienvenido de nuevo, {usuarios_db[correo]["nombre"]}!', 'success')
+            return redirect(url_for('perfil'))
+        else:
+            flash('Correo o contraseña incorrectos.', 'danger')
+
     return render_template('iniciosesion.html')
 
 @app.route('/crearcuenta', methods=['GET', 'POST'])
 def crearcuenta():
     if request.method == 'POST':
-        nombre = request.form['nombre']
-        correo = request.form['correo']
-        contrasena = request.form['contrasena']
-        confirmar = request.form['confirmar_contrasena']
+        nombre = request.form.get('nombre')
+        apellidos = request.form.get('apellidos')
+        correo = request.form.get('correo')
+        contrasena = request.form.get('contraseña')
+        edad = request.form.get('edad')
+        sexo = request.form.get('sexo')
+        peso = request.form.get('peso')
+        altura = request.form.get('altura')
+        actividad = request.form.get('actividad')
+        objetivo = request.form.get('objetivo')
+        preferencias = request.form.get('preferencias')
+        experiencia = request.form.get('experiencia')
 
         if not nombre or not correo or not contrasena:
-            flash("Por favor, completa todos los campos.", "warning")
+            flash("Por favor, completa los campos obligatorios.", "warning")
             return render_template('crearcuenta.html')
 
-        if contrasena != confirmar:
-            flash("Las contraseñas no coinciden.", "danger")
+        if correo in usuarios_db:
+            flash("Ya existe una cuenta con ese correo.", "danger")
             return render_template('crearcuenta.html')
 
-        flash('Cuenta creada exitosamente. ¡Bienvenido, {}!'.format(nombre), 'success')
+        usuarios_db[correo] = {
+            'nombre': nombre,
+            'apellidos': apellidos,
+            'correo': correo,
+            'contrasena': contrasena,
+            'edad': edad,
+            'sexo': sexo,
+            'peso': peso,
+            'altura': altura,
+            'actividad': actividad,
+            'objetivo': objetivo,
+            'preferencias': preferencias,
+            'experiencia': experiencia
+        }
+
+        session['usuario'] = usuarios_db[correo]
+
+        flash(f'Cuenta creada exitosamente. ¡Bienvenido, {nombre}!', 'success')
         return redirect(url_for('perfil'))
+
     return render_template('crearcuenta.html')
 
 @app.route('/gastoenergetico', methods=['GET', 'POST'])
@@ -115,7 +150,17 @@ def gastoenergetico():
 
 @app.route('/perfil')
 def perfil():
-    return render_template('perfil.html')
+    usuario = session.get('usuario')
+    if not usuario:
+        flash('Debes iniciar sesión para ver tu perfil.', 'warning')
+        return redirect(url_for('iniciosesion'))
+    return render_template('perfil.html', usuario=usuario)
+
+@app.route('/cerrarsesion')
+def cerrarsesion():
+    session.pop('usuario', None)
+    flash('Has cerrado sesión exitosamente.', 'info')
+    return redirect(url_for('index'))
 
 @app.route('/sabermas')
 def sabermas():
