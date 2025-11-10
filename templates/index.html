@@ -9,7 +9,7 @@
     <!-- Columna izquierda -->
     <div class="col-md-3">
 
-      <div class="card mb-3 border border-dark rounded-0">
+      <div class="card mb-3 shadow border border-dark rounded-0">
         <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">
          ¿Con que funciones cuenta NutriApp?
         </div>
@@ -25,7 +25,7 @@
         </div>
       </div>
 
-      <div class="card mb-3 border border-dark rounded-0">
+      <div class="card mb-3 border shadow border-dark rounded-0">
         <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">Nuestro plan de recetas</div>
         <div class="card-body">
           <p>Estamos trabajando para ampliar nuestra base de datos de recetas saludables aun si eres nuevo cocinando o eres todo un chef experto. Podrás disfrutar de una variedad aún mayor de opciones deliciosas, nutritivas y que requieren pocos o varios ingredientes dependiendo la complejidad.</p>
@@ -38,7 +38,7 @@
     <!-- Columna central -->
     <div class="col-md-6">
 
-      <div class="card mb-3 border border-dark rounded-0">
+      <div class="card mb-3 border shadow border-dark rounded-0">
         <div class="card-header text-white text-uppercase" style="background-color: #05c075ff; font-family: 'Jersey 20', sans-serif;">¿Que es NutriApp?</div>
         <div class="card-body">
           <div class="text-center mb-3">
@@ -50,7 +50,7 @@
         </div>
       </div>
 
-      <div class="card mb-3 border border-dark rounded-0">
+      <div class="card mb-3 border shadow border-dark rounded-0">
         <div class="card-header text-white text-uppercase" style="background-color: #05c075ff; font-family: 'Jersey 20', sans-serif;">Arte de los Usuarios</div>
         <div class="card-body text-center">
           <p>¡Crea tu propio arte! Usa el lienzo para dibujar lo que quieras 💚</p>
@@ -66,7 +66,7 @@
         </div>
       </div>
 
-      <div class="card mb-3 border border-dark rounded-0">
+      <div class="card mb-3 border shadow border-dark rounded-0">
         <div class="card-header text-white text-uppercase" style="background-color: #05c075ff; font-family: 'Jersey 20', sans-serif;">Creada por:</div>
         <div class="card-body">
           <p>Galvan Diaz Giancarlo Y Wendy Judith Vazquez Ortiz</p>
@@ -76,19 +76,42 @@
 
     <!-- Columna derecha -->
     <div class="col-md-3">
-      <div class="card mb-3 border border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">¿Ya tienes una cuenta?</div>
-        <div class="card-body">
-          <p>Inicia sesión para más funciones.</p>
-          <div class="d-grid gap-2">
-            <a href="{{url_for('iniciosesion')}}" class="btn btn-sm btn-outline-dark text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Iniciar sesión</a>
-            <a href="{{url_for('crearcuenta')}}" class="btn btn-sm btn-outline-secondary text-uppercase" style="font-family: 'Jersey 20', sans-serif;">Registrarse</a>
-          </div>
-        </div>
-      </div>
+      {% if session.usuario %}
+<div class="card mb-3 border shadow border-dark rounded-0">
+  <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">
+    ¡Bienvenido, {{ session.usuario['nombre'] }}!
+  </div>
+  <div class="card-body">
+    <p class="mb-2">Nos alegra verte de nuevo 😊</p>
+    <p>Explora tus recetas personalizadas, revisa tu progreso o consulta tu perfil.</p>
+    <div class="d-grid gap-2">
+      <a href="{{ url_for('perfil') }}" class="btn btn-sm btn-outline-success text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+        Ir a mi perfil
+      </a>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="card mb-3 border shadow border-dark rounded-0">
+  <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">
+    ¿Ya tienes una cuenta?
+  </div>
+  <div class="card-body">
+    <p>Inicia sesión para más funciones.</p>
+    <div class="d-grid gap-2">
+      <a href="{{ url_for('iniciosesion') }}" class="btn btn-sm btn-outline-dark text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+        Iniciar sesión
+      </a>
+      <a href="{{ url_for('crearcuenta') }}" class="btn btn-sm btn-outline-secondary text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+        Registrarse
+      </a>
+    </div>
+  </div>
+</div>
+{% endif %}
 
       
-      <div class="card mb-3 border border-dark rounded-0">
+      <div class="card mb-3 border shadow border-dark rounded-0">
         <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">Informacion del usuario</div>
         <div class="card-body">
           <p>Tu informacion estra protegida con nosotros, siendo usada solo para ayudarte a lograr tus metas.</p>
@@ -97,7 +120,7 @@
       </div>
 
 
-    <div class="card mb-3 border border-dark rounded-0">
+    <div class="card mb-3 border shadow border-dark rounded-0">
         <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">Contacto</div>
         <div class="card-body">
           <p>Si te comunicas con nosotros por estas redes tienes un 50% más de probabilidad de tener respuesta rápido:</p>

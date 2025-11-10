@@ -87,30 +87,51 @@
                 href="{{url_for('sabermas')}}">Para saber mas</a>
             </li>
           </ul>
-          <div class="dropdown">
-            <button
-              class="btn btn-outline-light dropdown-toggle text-uppercase"
-              type="button"
-              id="userMenuButton"
-              data-bs-toggle="dropdown"
-              aria-expanded="true"
-              style="font-family: 'Jersey 20', sans-serif;"
-            >
-              Usuario
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end border-dark" aria-labelledby="userMenuButton">
-              <li>
-                <a class="dropdown-item text-uppercase" href="{{url_for('iniciosesion')}}">Iniciar sesión</a>
-              </li>
-              <li>
-                <a class="dropdown-item text-uppercase" href="{{url_for('crearcuenta')}}">Crear cuenta</a>
-              </li>
-              <li><hr class="dropdown-divider"></li>
-              <li>
-                <a class="dropdown-item text-uppercase text-danger" href="{{url_for('cerrarsesion')}}">Cerrar sesión</a>
-              </li>
-            </ul>
-          </div>
+          {% if session.usuario %}
+<div class="dropdown">
+  <button
+    class="btn btn-outline-light dropdown-toggle text-uppercase"
+    type="button"
+    id="userMenuButton"
+    data-bs-toggle="dropdown"
+    aria-expanded="true"
+    style="font-family: 'Jersey 20', sans-serif;"
+  >
+    {{ session.usuario['nombre'] }}
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end border-dark" aria-labelledby="userMenuButton">
+    <li>
+      <a class="dropdown-item text-uppercase" href="{{ url_for('perfil') }}">Ver perfil</a>
+    </li>
+    <li><hr class="dropdown-divider"></li>
+    <li>
+      <a class="dropdown-item text-uppercase text-danger" href="{{ url_for('cerrarsesion') }}">Cerrar sesión</a>
+    </li>
+  </ul>
+</div>
+{% else %}
+<div class="dropdown">
+  <button
+    class="btn btn-outline-light dropdown-toggle text-uppercase"
+    type="button"
+    id="userMenuButton"
+    data-bs-toggle="dropdown"
+    aria-expanded="true"
+    style="font-family: 'Jersey 20', sans-serif;"
+  >
+    Usuario
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end border-dark" aria-labelledby="userMenuButton">
+    <li>
+      <a class="dropdown-item text-uppercase" href="{{ url_for('iniciosesion') }}">Iniciar sesión</a>
+    </li>
+    <li>
+      <a class="dropdown-item text-uppercase" href="{{ url_for('crearcuenta') }}">Crear cuenta</a>
+    </li>
+  </ul>
+</div>
+{% endif %}
+
           
         </div>
       </div>
