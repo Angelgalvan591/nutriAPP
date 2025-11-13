@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-5 font-monospace">
+  <div class="p-4 border border-dark rounded-0 text-center bg-white">
+    <h2 class="text-uppercase mb-4" style="font-family: 'Jersey 20', sans-serif; color: #007bff;">
+      Calculadoras Nutricionales
+    </h2>
+
+    <!-- Tarjetas con enlaces -->
+    <div class="card border border-dark rounded-0 mb-3" style="background-color: #e8f5e9;">
+      <div class="card-body">
+        <h5 class="card-title text-success text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+          💪 Calculadora de IMC
+        </h5>
+        <p class="card-text">
+          Calcula tu Índice de Masa Corporal para saber si tu peso está dentro de un rango saludable.
+        </p>
+        <a href="{{ url_for('imc') }}" class="btn btn-outline-success btn-sm">Ir a IMC</a>
+      </div>
+    </div>
+
+    <div class="card border border-dark rounded-0 mb-3" style="background-color: #e3f2fd;">
+      <div class="card-body">
+        <h5 class="card-title text-primary text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+          🔥 Tasa Metabólica Basal (TMB)
+        </h5>
+        <p class="card-text">
+          Estima cuántas calorías quema tu cuerpo en reposo según tu edad, peso y altura.
+        </p>
+        <a href="{{ url_for('tmb') }}" class="btn btn-outline-primary btn-sm">Ir a TMB</a>
+      </div>
+    </div>
+
+    <div class="card border border-dark rounded-0 mb-3" style="background-color: #e8f5e9;">
+      <div class="card-body">
+        <h5 class="card-title text-success text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+          🏃‍♂ Gasto Calórico Total (GCT)
+        </h5>
+        <p class="card-text">
+          Calcula tu gasto calórico diario tomando en cuenta tu nivel de actividad física.
+        </p>
+        <a href="{{ url_for('gct') }}" class="btn btn-outline-success btn-sm">Ir a GCT</a>
+      </div>
+    </div>
+
+    <div class="card border border-dark rounded-0 mb-3" style="background-color: #e3f2fd;">
+      <div class="card-body">
+        <h5 class="card-title text-primary text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+          ⚖ Peso Corporal Ideal
+        </h5>
+        <p class="card-text">
+          Descubre tu peso ideal según tu estatura y complexión corporal.
+        </p>
+        <a href="{{ url_for('pesoideal') }}" class="btn btn-outline-primary btn-sm">Ir a Peso Ideal</a>
+      </div>
+    </div>
+
+    <div class="card border border-dark rounded-0" style="background-color: #e8f5e9;">
+      <div class="card-body">
+        <h5 class="card-title text-success text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+          🥗 Calculadora de Macronutrientes
+        </h5>
+        <p class="card-text">
+          Calcula tus requerimientos diarios de proteínas, carbohidratos y grasas según tus objetivos.
+        </p>
+        <a href="{{ url_for('macronutrientes') }}" class="btn btn-outline-success btn-sm">Ir a Macronutrientes</a>
+      </div>
+    </div>
+
+    <!-- Botón de volver -->
+    <div class="mt-4">
+      <a href="{{ url_for('index') }}" class="btn btn-outline-dark rounded-0 text-uppercase">
+        ⬅ Volver al inicio
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

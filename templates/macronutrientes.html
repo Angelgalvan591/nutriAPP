@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-5">
+  <div class="card shadow-lg border-0">
+    <div class="card-header text-white text-center fw-bold" style="background-color: #28a745;">
+      Calculadora Nutricional
+    </div>
+    <div class="card-body bg-light bg-opacity-75">
+      <form method="POST" action="{{ url_for('macronutrientes') }}" class="row g-3">
+        <div class="col-md-4">
+          <label for="edad" class="form-label">Edad</label>
+          <input type="number" name="edad" id="edad" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+          <label for="sexo" class="form-label">Sexo</label>
+          <select name="sexo" id="sexo" class="form-select" required>
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="peso" class="form-label">Peso (kg)</label>
+          <input type="number" name="peso" id="peso" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+          <label for="altura" class="form-label">Altura (cm)</label>
+          <input type="number" name="altura" id="altura" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+          <label for="actividad" class="form-label">Nivel de actividad</label>
+          <select name="actividad" id="actividad" class="form-select" required>
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option value="1.2">Sedentario</option>
+            <option value="1.375">Ligero</option>
+            <option value="1.55">Moderado</option>
+            <option value="1.725">Intenso</option>
+            <option value="1.9">Muy intenso</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="objetivo" class="form-label">Objetivo</label>
+          <select name="objetivo" id="objetivo" class="form-select" required>
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option value="mantener">Mantener peso</option>
+            <option value="bajar">Bajar grasa</option>
+            <option value="subir">Subir masa muscular</option>
+          </select>
+        </div>
+        <div class="col-12 d-grid">
+          <button type="submit" class="btn btn-success">Calcular</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

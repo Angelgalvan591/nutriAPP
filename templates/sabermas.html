@@ -1,32 +1,128 @@
 {% extends "base.html" %}
+
 {% block content %}
-<div class="container my-4 font-monospace">
-    <div class="row g-3">
-        <div class="col-md-12">
-        <div class="card mb-3 border border-dark rounded-0">
-            <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">
-            ¿Por qué es importante una buena nutrición?
+<div class="container my-5 font-monospace">
+    <h2 class="text-center mb-4 text-uppercase fw-bold text-success" style="font-family: 'Jersey 20', sans-serif;">
+        Alimentación Saludable
+    </h2>
+
+    <div class="row g-4">
+        <div class="col-md-12" id="cards-container">
+
+            <!-- Tarjeta 1 -->
+            <div class="card border border-dark rounded-3 shadow-sm mb-3">
+                <div class="card-header text-white text-uppercase text-center" 
+                     style="background-color: #0066cc; font-family: 'Jersey 20', sans-serif;">
+                    ¿Por qué es importante una buena nutrición?
+                </div>
+                <div class="card-body">
+                    <p>
+                        Una buena nutrición es fundamental para mantener una salud óptima y prevenir enfermedades.
+                        Una dieta equilibrada proporciona los nutrientes esenciales que nuestro cuerpo necesita
+                        para funcionar correctamente, fortalecer el sistema inmunológico y mantener niveles adecuados de energía.
+                    </p>
+                </div>
             </div>
-            <div class="card-body">
-            <p>Una buena nutrición es fundamental para mantener una salud óptima y prevenir enfermedades. Una dieta equilibrada proporciona los nutrientes esenciales que nuestro cuerpo necesita para funcionar correctamente, fortalecer el sistema inmunológico y mantener niveles adecuados de energía.</p>
+
+            <!-- Tarjeta 2 -->
+            <div class="card border border-dark rounded-3 shadow-sm mb-3">
+                <div class="card-header text-white text-uppercase text-center"
+                     style="background-color: #00994d; font-family: 'Jersey 20', sans-serif;">
+                    Consejos para una alimentación saludable
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Incorpora una variedad de frutas y verduras en tu dieta diaria.</li>
+                        <li>Elige granos enteros en lugar de granos refinados.</li>
+                        <li>Limita el consumo de azúcares añadidos y grasas saturadas.</li>
+                        <li>Mantente hidratado bebiendo suficiente agua.</li>
+                        <li>Practica el control de porciones para evitar el exceso de calorías.</li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    
-        <div class="card mb-3 border border-dark rounded-0">
-            <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">
-            Consejos para una alimentación saludable
+
+            <!-- Tarjeta 3 -->
+            <div class="card border border-dark rounded-3 shadow-sm mb-3">
+                <div class="card-header text-white text-uppercase text-center"
+                     style="background-color: #00b8e6; font-family: 'Jersey 20', sans-serif;">
+                    ¿Cómo leer las etiquetas nutricionales?
+                </div>
+                <div class="card-body">
+                    <p>
+                        Leer correctamente las etiquetas nutricionales te permite conocer qué estás consumiendo.
+                        Observa el tamaño de la porción, las calorías, los macronutrientes (grasas, carbohidratos y proteínas),
+                        así como el contenido de azúcares añadidos, sodio y fibra.
+                        Esto ayuda a comparar productos y tomar decisiones más saludables.
+                    </p>
+                </div>
             </div>
-            <div class="card-body">
-            <ul>
-                <li>Incorpora una variedad de frutas y verduras en tu dieta diaria.</li>
-                <li>Elige granos enteros en lugar de granos refinados.</li>
-                <li>Limita el consumo de azúcares añadidos y grasas saturadas.</li>
-                <li>Mantente hidratado bebiendo suficiente agua.</li>
-                <li>Practica el control de porciones para evitar el exceso de calorías.</li>
-            </ul>
+
+            <!-- Tarjeta 4 -->
+            <div class="card border border-dark rounded-3 shadow-sm mb-3">
+                <div class="card-header text-white text-uppercase text-center"
+                     style="background-color: #007a33; font-family: 'Jersey 20', sans-serif;">
+                    Mitos y verdades sobre las dietas de moda
+                </div>
+                <div class="card-body">
+                    <p>
+                        Muchas dietas prometen resultados rápidos, pero no todas son seguras ni sostenibles.
+                        Es un mito que eliminar completamente los carbohidratos o las grasas sea saludable.
+                        La verdad es que el equilibrio y la moderación son clave.
+                        Siempre consulta a un profesional antes de seguir cualquier régimen alimenticio extremo.
+                    </p>
+                </div>
             </div>
-        </div>
+
+            <!-- Tarjeta 5 -->
+            <div class="card border border-dark rounded-3 shadow-sm mb-3">
+                <div class="card-header text-white text-uppercase text-center"
+                     style="background-color: #0099cc; font-family: 'Jersey 20', sans-serif;">
+                    Guía sobre macronutrientes y su función
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li><strong>Carbohidratos:</strong> Fuente principal de energía.</li>
+                        <li><strong>Proteínas:</strong> Ayudan a formar y reparar tejidos.</li>
+                        <li><strong>Grasas saludables:</strong> Esenciales para el cerebro y la absorción de vitaminas.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tarjeta 6 -->
+            <div class="card border border-dark rounded-3 shadow-sm mb-3">
+                <div class="card-header text-white text-uppercase text-center"
+                     style="background-color: #00cc66; font-family: 'Jersey 20', sans-serif;">
+                    La importancia de la hidratación y la fibra
+                </div>
+                <div class="card-body">
+                    <p>
+                        Mantenerse hidratado es vital para el buen funcionamiento del organismo.
+                        La fibra ayuda a regular el tránsito intestinal y controlar el apetito.
+                        Ambas son piezas clave de una alimentación equilibrada y saludable.
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-{% endblock %}
+
+<!-- 🌟 Script para efectos dinámicos con hover -->
+<script>
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.classList.add('shadow-lg');
+            card.style.transform = 'scale(1.04)';
+            card.style.transition = 'all 0.3s ease';
+            card.style.borderColor = '#00bfa5';
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.classList.remove('shadow-lg');
+            card.style.transform = 'scale(1)';
+            card.style.borderColor = '#000';
+        });
+    });
+</script>
+{% endblock %}

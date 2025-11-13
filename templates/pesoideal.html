@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header text-white text-center fw-bold" style="background-color: #1E90FF;">
+            Calculadora de Peso Corporal Ideal
+        </div>
+        <div class="card-body text-center">
+            <p>Conoce cuál es tu peso ideal basado en tu estatura, sexo y complexión corporal.</p>
+            <a href="#" class="btn btn-outline-primary m-2">Calcular Peso Ideal</a>
+            <a href="{{ url_for('sabermas') }}" class="btn btn-outline-success m-2">Volver</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
