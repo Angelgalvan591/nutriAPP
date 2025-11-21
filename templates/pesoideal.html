@@ -1,15 +1,58 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container my-5">
-    <div class="card shadow-lg border-0">
-        <div class="card-header text-white text-center fw-bold" style="background-color: #1E90FF;">
-            Calculadora de Peso Corporal Ideal
-        </div>
-        <div class="card-body text-center">
-            <p>Conoce cuál es tu peso ideal basado en tu estatura, sexo y complexión corporal.</p>
-            <a href="#" class="btn btn-outline-primary m-2">Calcular Peso Ideal</a>
-            <a href="{{ url_for('calculadoras') }}" class="btn btn-outline-success m-2">Volver</a>
-        </div>
+<div class="container text-center">
+  <h2 class="text-danger mb-4">Calcula tu peso ideal</h2>
+
+  <form method="POST" action="{{ url_for('pesoideal') }}">
+    <div class="mb-3">
+      <label class="form-label">Género</label><br>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="genero" value="masculino" required>
+        <label class="form-check-label">Masculino</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="genero" value="femenino" required>
+        <label class="form-check-label">Femenino</label>
+      </div>
     </div>
+
+    <div class="mb-3">
+      <label class="form-label">Edad</label>
+      <input type="number" name="edad" class="form-control text-center" placeholder="Ej: 35 años" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Estatura (cm)</label>
+      <input type="number" name="altura" class="form-control text-center" placeholder="Ej: 165 cm" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">CALCULAR</button>
+  </form>
 </div>
+
+{% if resultado %}
+<div class="container text-center mt-5">
+  <div class="card border-dark mx-auto bg-white" style="max-width: 500px;">
+    <div class="card-body d-flex align-items-center">
+      <div class="me-3">
+        <div class="bg-primary rounded-circle d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+          <span class="text-white fs-3">^_^</span>
+        </div>
+      </div>
+      <div class="text-start">
+        <h5 class="text-danger fw-bold">RESULTADO:</h5>
+        <p class="mb-1 text-dark" style="font-family: 'Press Start 2P', monospace;">
+          {{ resultado }}
+        </p>
+        <p class="text-muted small">
+          Este rango se basa en el IMC normal. Puede variar según edad, masa muscular y actividad física.
+        </p>
+      </div>
+    </div>
+    <div class="card-footer bg-light">
+      <a href="{{ url_for('pesoideal') }}" class="btn btn-dark">CALCULAR DE NUEVO</a>
+    </div>
+  </div>
+</div>
+{% endif %}
 {% endblock %}

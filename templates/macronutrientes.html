@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container my-5">
-  <div class="card shadow-lg border-0">
+  <div class="card shadow-lg border-dark">
     <div class="card-header text-white text-center fw-bold" style="background-color: #28a745;">
       Calculadora Nutricional
     </div>
-    <div class="card-body bg-light bg-opacity-75">
+    <div class="card-body bg-light">
       <form method="POST" action="{{ url_for('macronutrientes') }}" class="row g-3">
+
         <div class="col-md-4">
           <label for="edad" class="form-label">Edad</label>
-          <input type="number" name="edad" id="edad" class="form-control" required>
+          <input type="number" name="edad" id="edad" class="form-control" placeholder="Ej: 30" required>
         </div>
+
         <div class="col-md-4">
           <label for="sexo" class="form-label">Sexo</label>
           <select name="sexo" id="sexo" class="form-select" required>
@@ -19,14 +21,17 @@
             <option value="femenino">Femenino</option>
           </select>
         </div>
+
         <div class="col-md-4">
           <label for="peso" class="form-label">Peso (kg)</label>
-          <input type="number" name="peso" id="peso" class="form-control" required>
+          <input type="number" name="peso" id="peso" class="form-control" placeholder="Ej: 70" required>
         </div>
+
         <div class="col-md-4">
           <label for="altura" class="form-label">Altura (cm)</label>
-          <input type="number" name="altura" id="altura" class="form-control" required>
+          <input type="number" name="altura" id="altura" class="form-control" placeholder="Ej: 165" required>
         </div>
+
         <div class="col-md-4">
           <label for="actividad" class="form-label">Nivel de actividad</label>
           <select name="actividad" id="actividad" class="form-select" required>
@@ -38,6 +43,7 @@
             <option value="1.9">Muy intenso</option>
           </select>
         </div>
+
         <div class="col-md-4">
           <label for="objetivo" class="form-label">Objetivo</label>
           <select name="objetivo" id="objetivo" class="form-select" required>
@@ -47,10 +53,34 @@
             <option value="subir">Subir masa muscular</option>
           </select>
         </div>
+
         <div class="col-12 d-grid">
           <button type="submit" class="btn btn-success">Calcular</button>
         </div>
       </form>
+
+      {% if resultado %}
+      <div class="mt-5">
+        <div class="card border-0 shadow-sm mx-auto" style="max-width: 500px;">
+          <div class="card-body d-flex align-items-start">
+            <div class="me-3">
+              <div class="bg-primary rounded-circle d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+                <span class="text-white fs-3 fw-bold">(●'◡'●)</span>
+              </div>
+            </div>
+            <div class="text-start">
+              <h5 class="text-dark fw-bold mb-2">RESULTADO NUTRICIONAL:</h5>
+              <p class="mb-1 text-dark" style="font-size: 1rem;">
+                {{ resultado|safe }}
+              </p>
+              <p class="text-muted small">
+                Estos valores son estimados según tu perfil y objetivo. Para ajustes personalizados, consulta a un profesional.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
     </div>
   </div>
 </div>

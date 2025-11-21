@@ -1,6 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
+import requests
 
 app = Flask(__name__)
+
+API_KEY = "zHYga31MsqopFACKsNz8AWNXvs0h6tyKxULQ9hKz"
+API_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
 
 app.config['SECRET_KEY']='una_clave_secreta_muy_larga_y_compleja_1234567890'
 
@@ -171,7 +175,7 @@ def sabermas():
 def calculadoras():
     return render_template('calculadoras.html')
 
-# 💪 IMC
+#  IMC
 @app.route('/imc', methods=['GET', 'POST'])
 def imc():
     resultado = None
@@ -192,7 +196,7 @@ def imc():
         resultado = f"Tu IMC es {imc:.2f} ({estado})"
     return render_template('imc.html', resultado=resultado)
 
-# 🔥 TMB
+# TMB
 @app.route('/tmb', methods=['GET', 'POST'])
 def tmb():
     resultado = None
@@ -210,7 +214,7 @@ def tmb():
         resultado = f"Tu TMB es {tmb:.2f} calorías/día"
     return render_template('tmb.html', resultado=resultado)
 
-# 🏃‍♂ Gasto Calórico Total
+#  Gasto Calórico Total
 @app.route('/gct', methods=['GET', 'POST'])
 def gct():
     resultado = None
@@ -221,7 +225,7 @@ def gct():
         resultado = f"Tu Gasto Calórico Total es {gct:.2f} calorías/día"
     return render_template('gct.html', resultado=resultado)
 
-# ⚖ Peso Ideal
+# Peso Ideal
 @app.route('/pesoideal', methods=['GET', 'POST'])
 def pesoideal():
     resultado = None
@@ -235,7 +239,7 @@ def pesoideal():
         resultado = f"Tu peso ideal aproximado es {peso_ideal:.1f} kg"
     return render_template('pesoideal.html', resultado=resultado)
 
-# 🥗 Macronutrientes
+# Macronutrientes
 @app.route('/macronutrientes', methods=['GET', 'POST'])
 def macronutrientes():
     resultado = None
@@ -247,7 +251,41 @@ def macronutrientes():
         resultado = f"Proteínas: {proteinas:.1f}g | Grasas: {grasas:.1f}g | Carbohidratos: {carbohidratos:.1f}g"
     return render_template('macronutrientes.html', resultado=resultado)
 
+@app.route('/analizador', methods=['GET', 'POST'])
+def analizador():
+    resultado = None
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        ingredientes = request.form['ingredientes'].lower().split(',')
 
+        # Simulación básica
+        calorias = 0
+        proteinas = 0
+        grasas = 0
+        carbohidratos = 0
+
+        for item in ingredientes:
+            item = item.strip()
+            if "pollo" in item:
+                calorias += 165
+                proteinas += 31
+            elif "queso" in item:
+                calorias += 100
+                grasas += 8
+            elif "tortilla" in item:
+                calorias += 70
+                carbohidratos += 15
+            
+
+        resultado = f"""
+        <strong>{nombre.title()}</strong><br>
+        Calorías estimadas: {calorias} kcal<br>
+        Proteínas: {proteinas}g<br>
+        Grasas: {grasas}g<br>
+        Carbohidratos: {carbohidratos}g
+        """
+
+    return render_template('analizador.html', resultado=resultado)
 
 if __name__ == '__main__':
     app.run(debug=True)
