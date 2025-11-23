@@ -21,54 +21,15 @@ alimentos_caloricos = [
 
 alimentos_clasificados = []
 
+def login_requerido():
+    if 'usuario' not in session:
+        flash('Debes iniciar sesión para acceder a esta sección.', 'warning')
+        return redirect(url_for('iniciosesion'))
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
-
-@app.route('/recetas')
-def recetas():
-    return render_template('recetas.html')
-
-@app.route('/contadorcal', methods=['GET', 'POST'])
-def contadorcal():
-    if request.method == 'POST':
-        nombre = request.form['foodItem']
-        calorias = float(request.form['calories'])
-        alimentos_caloricos.append({'nombre': nombre, 'calorias': calorias})
-
-    total = sum(a['calorias'] for a in alimentos_caloricos)
-    return render_template('contadorcal.html', alimentos=alimentos_caloricos, total_calorias=total)
-
-@app.route('/limpiar_calorias', methods=['POST'])
-def limpiar_calorias():
-    alimentos_caloricos.clear()
-    return redirect(url_for('contadorcal'))
-
-@app.route('/clasificador', methods=['GET', 'POST'])
-def clasificador():
-    if request.method == 'POST':
-        nombre = request.form['nombre']
-        grasas = float(request.form['grasas'])
-        proteinas = float(request.form['proteinas'])
-        carbohidratos = float(request.form['carbohidratos'])
-
-        if grasas > proteinas and grasas > carbohidratos:
-            clasificacion = 'Alto en grasas'
-        elif proteinas > grasas and proteinas > carbohidratos:
-            clasificacion = 'Alto en proteínas'
-        elif carbohidratos > grasas and carbohidratos > proteinas:
-            clasificacion = 'Alto en carbohidratos'
-        else:
-            clasificacion = 'Balanceado'
-
-        alimentos_clasificados.append({'nombre': nombre, 'clasificacion': clasificacion})
-
-    return render_template('clasificador.html', alimentos_clasificados=alimentos_clasificados)
-
-@app.route('/limpiar_lista', methods=['POST'])
-def limpiar_lista():
-    alimentos_clasificados.clear()
-    return redirect(url_for('clasificador'))
 
 @app.route('/iniciosesion', methods=['GET', 'POST'])
 def iniciosesion():
@@ -131,6 +92,61 @@ def crearcuenta():
 
     return render_template('crearcuenta.html')
 
+@app.route('/perfil')
+def perfil():
+    usuario = session.get('usuario')
+    if not usuario:
+        flash('Debes iniciar sesión para ver tu perfil.', 'warning')
+        return redirect(url_for('iniciosesion'))
+    return render_template('perfil.html', usuario=usuario)
+
+@app.route('/cerrarsesion')
+def cerrarsesion():
+    session.pop('usuario', None)
+    flash('Has cerrado sesión exitosamente.', 'info')
+    return redirect(url_for('index'))
+
+@app.route('/recetas')
+def recetas():
+    return render_template('recetas.html')
+
+# Clasificador de alimentos
+@app.route('/clasificador', methods=['GET', 'POST'])
+def clasificador():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        grasas = float(request.form['grasas'])
+        proteinas = float(request.form['proteinas'])
+        carbohidratos = float(request.form['carbohidratos'])
+
+        if grasas > proteinas and grasas > carbohidratos:
+            clasificacion = 'Alto en grasas'
+        elif proteinas > grasas and proteinas > carbohidratos:
+            clasificacion = 'Alto en proteínas'
+        elif carbohidratos > grasas and carbohidratos > proteinas:
+            clasificacion = 'Alto en carbohidratos'
+        else:
+            clasificacion = 'Balanceado'
+
+        alimentos_clasificados.append({'nombre': nombre, 'clasificacion': clasificacion})
+
+    return render_template('clasificador.html', alimentos_clasificados=alimentos_clasificados)
+
+@app.route('/limpiar_lista', methods=['POST'])
+def limpiar_lista():
+    alimentos_clasificados.clear()
+    return redirect(url_for('clasificador'))
+
+# Sección informativa
+@app.route('/sabermas')
+def sabermas():
+    return render_template('sabermas.html')
+
+# Sección de calculadoras nutricionales
+@app.route('/calculadoras')
+def calculadoras():
+    return render_template('calculadoras.html')
+
 @app.route('/gastoenergetico', methods=['GET', 'POST'])
 def gastoenergetico():
     if request.method == 'POST':
@@ -152,28 +168,6 @@ def gastoenergetico():
 
     return render_template('gastoenergetico.html')
 
-@app.route('/perfil')
-def perfil():
-    usuario = session.get('usuario')
-    if not usuario:
-        flash('Debes iniciar sesión para ver tu perfil.', 'warning')
-        return redirect(url_for('iniciosesion'))
-    return render_template('perfil.html', usuario=usuario)
-
-@app.route('/cerrarsesion')
-def cerrarsesion():
-    session.pop('usuario', None)
-    flash('Has cerrado sesión exitosamente.', 'info')
-    return redirect(url_for('index'))
-
-@app.route('/sabermas')
-def sabermas():
-    return render_template('sabermas.html')
-
-# Nueva sección de calculadoras nutricionales angangangang
-@app.route('/calculadoras')
-def calculadoras():
-    return render_template('calculadoras.html')
 
 #  IMC
 @app.route('/imc', methods=['GET', 'POST'])
