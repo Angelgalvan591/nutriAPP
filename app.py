@@ -113,6 +113,10 @@ def recetas():
 # Clasificador de alimentos
 @app.route('/clasificador', methods=['GET', 'POST'])
 def clasificador():
+    redir = login_requerido()
+    if redir:
+        return redir
+    
     if request.method == 'POST':
         nombre = request.form['nombre']
         grasas = float(request.form['grasas'])
@@ -145,6 +149,10 @@ def sabermas():
 # Sección de calculadoras nutricionales
 @app.route('/calculadoras')
 def calculadoras():
+    redir = login_requerido()
+    if redir:
+        return redir
+    
     return render_template('calculadoras.html')
 
 @app.route('/gastoenergetico', methods=['GET', 'POST'])
