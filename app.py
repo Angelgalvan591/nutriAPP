@@ -1,5 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 import requests
+from flask_mysqldb import MySQL
+from werkzeug.security import generate_password_hash, check_password_hash
+import MySQLdb.cursors
+
 
 app = Flask(__name__)
 
@@ -8,7 +12,68 @@ API_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
 
 app.config['SECRET_KEY']='una_clave_secreta_muy_larga_y_compleja_1234567890'
 
-usuarios_db = {}
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''  
+app.config['MYSQL_DB'] = 'nutriapp_vogd'
+mysql = MySQL(app)
+
+def crear_tabla_usuarios():
+    """Crea la tabla usuarios si no existe."""
+    cursor = mysql.connection.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS usuarios (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nombre VARCHAR(100),
+            apellidos VARCHAR(200),
+            correo VARCHAR(120) UNIQUE,
+            telefono VARCHAR(30),
+            contrasena VARCHAR(255),
+            edad INT,
+            sexo VARCHAR(20),
+            peso FLOAT,
+            altura FLOAT,
+            preferencias TEXT
+        )
+    ''')
+    mysql.connection.commit()
+    cursor.close()
+
+
+def get_usuario_por_correo_o_telefono(identificador):
+    """
+    Busca usuario por correo o por teléfono.
+    Devuelve diccionario con campos o None.
+    """
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT * FROM usuarios WHERE correo = %s OR telefono = %s", (identificador, identificador))
+    user = cursor.fetchone()
+    cursor.close()
+    return user
+
+
+def get_usuario_por_correo(correo):
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT * FROM usuarios WHERE correo = %s", (correo,))
+    user = cursor.fetchone()
+    cursor.close()
+    return user
+
+
+def login_requerido(func):
+    """Decorator simple para proteger rutas (sin usar flask-login)."""
+    from functools import wraps
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if 'usuario_correo' not in session:
+            flash('Debes iniciar sesión para acceder a esta sección.', 'warning')
+            return redirect(url_for('iniciosesion'))
+        return func(*args, **kwargs)
+    return wrapper
+
+# Crear tabla al iniciar
+with app.app_context():
+    crear_tabla_usuarios()
 
 # Datos globales
 alimentos_caloricos = [
@@ -21,101 +86,218 @@ alimentos_caloricos = [
 
 alimentos_clasificados = []
 
-def login_requerido():
-    if 'usuario' not in session:
-        flash('Debes iniciar sesión para acceder a esta sección.', 'warning')
-        return redirect(url_for('iniciosesion'))
-
-
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/iniciosesion', methods=['GET', 'POST'])
-def iniciosesion():
-    if request.method == 'POST':
-        correo = request.form.get('nombre') 
-        contrasena = request.form.get('contraseña')
-
-        if correo in usuarios_db and usuarios_db[correo]['contrasena'] == contrasena:
-            session['usuario'] = usuarios_db[correo]
-            flash(f'Bienvenido de nuevo, {usuarios_db[correo]["nombre"]}!', 'success')
-            return redirect(url_for('perfil'))
-        else:
-            flash('Correo o contraseña incorrectos.', 'danger')
-
-    return render_template('iniciosesion.html')
-
 @app.route('/crearcuenta', methods=['GET', 'POST'])
 def crearcuenta():
     if request.method == 'POST':
-        nombre = request.form.get('nombre')
-        apellidos = request.form.get('apellidos')
-        correo = request.form.get('correo')
-        contrasena = request.form.get('contraseña')
-        edad = request.form.get('edad')
-        sexo = request.form.get('sexo')
-        peso = request.form.get('peso')
-        altura = request.form.get('altura')
-        actividad = request.form.get('actividad')
-        objetivo = request.form.get('objetivo')
-        preferencias = request.form.get('preferencias')
-        experiencia = request.form.get('experiencia')
+        nombre = request.form.get('nombre', '').strip()
+        paterno = request.form.get('paterno', '').strip()
+        materno = request.form.get('materno', '').strip()
+        apellidos = f"{paterno} {materno}".strip()
+        correo = request.form.get('correo', '').strip().lower()
+        telefono = request.form.get('telefono', '').strip()
+        contrasena = request.form.get('contraseña', '')
+        confirmar = request.form.get('confirmarcontraseña', '')
+        edad = request.form.get('edad') or None
+        sexo = request.form.get('sexo') or None
+        peso = request.form.get('peso') or None
+        altura = request.form.get('altura') or None
 
+        # Validaciones básicas
         if not nombre or not correo or not contrasena:
             flash("Por favor, completa los campos obligatorios.", "warning")
             return render_template('crearcuenta.html')
 
-        if correo in usuarios_db:
-            flash("Ya existe una cuenta con ese correo.", "danger")
+        if contrasena != confirmar:
+            flash("Las contraseñas no coinciden.", "warning")
             return render_template('crearcuenta.html')
 
-        usuarios_db[correo] = {
-            'nombre': nombre,
-            'apellidos': apellidos,
-            'correo': correo,
-            'contrasena': contrasena,
-            'edad': edad,
-            'sexo': sexo,
-            'peso': peso,
-            'altura': altura,
-            'actividad': actividad,
-            'objetivo': objetivo,
-            'preferencias': preferencias,
-            'experiencia': experiencia
-        }
+        if get_usuario_por_correo_o_telefono(correo) is not None:
+            flash("Ya existe una cuenta con ese correo o teléfono.", "danger")
+            return render_template('crearcuenta.html')
 
-        session['usuario'] = usuarios_db[correo]
+        # Guardar en BD (hash de contraseña)
+        hash_pw = generate_password_hash(contrasena)
 
-        flash(f'Cuenta creada exitosamente. ¡Bienvenido, {nombre}!', 'success')
-        return redirect(url_for('perfil'))
+        cursor = mysql.connection.cursor()
+        cursor.execute("""
+            INSERT INTO usuarios (nombre, apellidos, correo, telefono, contrasena, edad, sexo, peso, altura, preferencias)
+            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+        """, (
+            nombre, apellidos, correo, telefono, hash_pw,
+            int(edad) if edad else None, sexo,
+            float(peso) if peso else None, float(altura) if altura else None,
+            ''  # preferencias vacío inicialmente
+        ))
+        mysql.connection.commit()
+        cursor.close()
+
+        flash("Cuenta creada correctamente. Inicia sesión.", "success")
+        return redirect(url_for('iniciosesion'))
 
     return render_template('crearcuenta.html')
 
+@app.route('/iniciosesion', methods=['GET', 'POST'])
+def iniciosesion():
+    if request.method == 'POST':
+        identificador = request.form.get('nombre', '').strip()  # puede ser correo o teléfono
+        contrasena = request.form.get('contraseña', '')
+
+        usuario = get_usuario_por_correo_o_telefono(identificador)
+        if usuario and check_password_hash(usuario['contrasena'], contrasena):
+            # Guardar solo el correo en sesión
+            session['usuario_correo'] = usuario['correo']
+            flash(f'Bienvenido de nuevo, {usuario["nombre"]}!', 'success')
+            return redirect(url_for('perfil'))
+        else:
+            flash('Correo/usuario o contraseña incorrectos.', 'danger')
+
+    return render_template('iniciosesion.html')
+
 @app.route('/perfil')
+@login_requerido
 def perfil():
-    usuario = session.get('usuario')
+    correo = session.get('usuario_correo')
+    usuario = get_usuario_por_correo(correo)
     if not usuario:
-        flash('Debes iniciar sesión para ver tu perfil.', 'warning')
+        flash('Usuario no encontrado. Inicia sesión de nuevo.', 'warning')
+        session.pop('usuario_correo', None)
         return redirect(url_for('iniciosesion'))
+
+    prefs_text = usuario.get('preferencias') or ''
+    preferencias_lista = [p for p in prefs_text.split(';') if p.strip()]
+    usuario['preferencias_lista'] = preferencias_lista
+
     return render_template('perfil.html', usuario=usuario)
+
+@app.route('/actualizar_preferencias', methods=['POST'])
+@login_requerido
+def actualizar_preferencias():
+    correo = session.get('usuario_correo')
+    usuario = get_usuario_por_correo(correo)
+
+    if not usuario:
+        flash('Usuario no encontrado.', 'danger')
+        return redirect(url_for('iniciosesion'))
+
+    # Preferencias ya guardadas en la BD
+    prefs_text = usuario.get('preferencias') or ""
+    prefs_dict = {}
+
+    # Convertir "Clave:Valor" → diccionario
+    for parte in prefs_text.split(";"):
+        if ":" in parte:
+            key, val = parte.split(":", 1)
+            prefs_dict[key] = val
+
+    # Nuevos valores enviados
+    actividad = request.form.get("actividad", "").strip()
+    objetivo = request.form.get("objetivo", "").strip()
+    alergias = request.form.get("alergias", "").strip()
+    experiencia = request.form.get("experiencia", "").strip()
+
+    # Si vinieron valores nuevos, reemplazan los existentes
+    if actividad:
+        prefs_dict["Actividad"] = actividad
+    if objetivo:
+        prefs_dict["Objetivo"] = objetivo
+    if experiencia:
+        prefs_dict["Experiencia"] = experiencia
+    if alergias:
+        prefs_dict["Alergias"] = alergias
+
+    # Convertir de vuelta a texto
+    nuevo_texto = ";".join([f"{k}:{v}" for k, v in prefs_dict.items()])
+
+    cursor = mysql.connection.cursor()
+    cursor.execute("UPDATE usuarios SET preferencias = %s WHERE correo = %s",
+                   (nuevo_texto, correo))
+    mysql.connection.commit()
+    cursor.close()
+
+    flash("Preferencias actualizadas con éxito", "success")
+    return redirect(url_for("perfil"))
+
+
+@app.route('/añadir_preferencia', methods=['POST'])
+@login_requerido
+def anadir_preferencia():
+    correo = session.get('usuario_correo')
+    nueva = request.form.get('nueva_preferencia', '').strip()
+    if not nueva:
+        flash('Ingresa una preferencia válida.', 'warning')
+        return redirect(url_for('perfil'))
+
+    usuario = get_usuario_por_correo(correo)
+    prefs_text = usuario.get('preferencias') or ''
+    prefs_lista = [p for p in prefs_text.split(';') if p.strip()]
+    prefs_lista.append(nueva)
+    nueva_text = ';'.join(prefs_lista)
+
+    cursor = mysql.connection.cursor()
+    cursor.execute("UPDATE usuarios SET preferencias = %s WHERE correo = %s", (nueva_text, correo))
+    mysql.connection.commit()
+    cursor.close()
+
+    flash('Preferencia añadida.', 'success')
+    return redirect(url_for('perfil'))
+
+@app.route('/editar_usuario', methods=['POST'])
+@login_requerido
+def editar_usuario():
+    correo = session.get('usuario_correo')
+    usuario = get_usuario_por_correo(correo)
+    if not usuario:
+        flash('Usuario no encontrado.', 'danger')
+        return redirect(url_for('iniciosesion'))
+
+    nombre = request.form.get('nombre', usuario['nombre']).strip()
+    apellidos = request.form.get('apellidos', usuario.get('apellidos', '')).strip()
+    telefono = request.form.get('telefono', usuario.get('telefono', '')).strip()
+    edad = request.form.get('edad') or None
+    sexo = request.form.get('genero', usuario.get('sexo'))
+    peso = request.form.get('peso') or None
+    altura = request.form.get('altura') or None
+
+    cursor = mysql.connection.cursor()
+    cursor.execute("""
+        UPDATE usuarios
+        SET nombre=%s, apellidos=%s, telefono=%s, edad=%s, sexo=%s, peso=%s, altura=%s
+        WHERE correo=%s
+    """, (
+        nombre, apellidos, telefono,
+        int(edad) if edad else None,
+        sexo,
+        float(peso) if peso else None,
+        float(altura) if altura else None,
+        correo
+    ))
+    mysql.connection.commit()
+    cursor.close()
+
+    flash('Datos de usuario actualizados.', 'success')
+    return redirect(url_for('perfil'))
+
 
 @app.route('/cerrarsesion')
 def cerrarsesion():
-    session.pop('usuario', None)
+    session.pop('usuario_correo', None)
     flash('Has cerrado sesión exitosamente.', 'info')
     return redirect(url_for('index'))
 
+
 @app.route('/recetas')
+@login_requerido
 def recetas():
     return render_template('recetas.html')
 
 # Clasificador de alimentos
 @app.route('/clasificador', methods=['GET', 'POST'])
+@login_requerido
 def clasificador():
-    redir = login_requerido()
-    if redir:
-        return redir
     
     if request.method == 'POST':
         nombre = request.form['nombre']
@@ -148,11 +330,8 @@ def sabermas():
 
 # Sección de calculadoras nutricionales
 @app.route('/calculadoras')
+@login_requerido
 def calculadoras():
-    redir = login_requerido()
-    if redir:
-        return redir
-    
     return render_template('calculadoras.html')
 
 @app.route('/gastoenergetico', methods=['GET', 'POST'])

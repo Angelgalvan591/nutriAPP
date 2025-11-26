@@ -1,32 +1,180 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container my-5 font-monospace" style="max-width: 700px;">
-  <div class="border border-dark bg-white p-5 rounded-3 shadow">
-    <h2 class="text-center text-success text-uppercase mb-4" style="font-family: 'Jersey 20', sans-serif;">
-      Perfil de Usuario
-    </h2>
 
-    <div class="mb-4">
-      <h4 class="text-uppercase">Información Personal</h4>
-      <p><strong>Nombre:</strong> {{ usuario.nombre }} {{ usuario.apellidos }}</p>
-      <p><strong>Correo:</strong> {{ usuario.correo }}</p>
-      <p><strong>Edad:</strong> {{ usuario.edad }} años</p>
-      <p><strong>Sexo:</strong> {{ usuario.sexo }}</p>
-      <p><strong>Peso:</strong> {{ usuario.peso }} kg</p>
-      <p><strong>Altura:</strong> {{ usuario.altura }} cm</p>
+<div class="container my-5 font-monospace">
+  <div>
+    <div class="row g-4">
+
+      <!-- COLUMNA IZQUIERDA: INFORMACIÓN PERSONAL -->
+      <div class="col-md-5">
+        <div class="border border-dark rounded-3 p-4 position-relative">
+          <h4 class="text-uppercase mb-3" style="font-family: 'Jersey 20'">Información Personal</h4>
+
+          <!-- BLOQUE MOSTRAR DATOS -->
+          <div id="datos-view">
+            <p><strong>Nombre:</strong> {{ usuario.nombre }} {{ usuario.apellidos }}</p>
+            <p><strong>Edad:</strong> {{ usuario.edad }}</p>
+            <p><strong>Género:</strong> {{ usuario.sexo }}</p>
+            <p><strong>Peso:</strong> {{ usuario.peso }} kg</p>
+            <p><strong>Altura:</strong> {{ usuario.altura }} cm</p
+            <p><strong>Correo:</strong> {{ usuario.correo }}</p>
+            <p><strong>Teléfono:</strong> {{ usuario.telefono }}</p>
+          </div>
+
+          <!-- BLOQUE FORMULARIO (APARECE EN MISMO LUGAR) -->
+          <form action="{{ url_for('editar_usuario') }}" method="POST" id="datos-edit" style="display:none">
+
+            <label>Nombre</label>
+            <input type="text" class="form-control mb-2" name="nombre" value="{{ usuario.nombre }}">
+
+            <label>Apellidos</label>
+            <input type="text" class="form-control mb-2" name="apellidos" value="{{ usuario.apellidos }}">
+
+            <label>Edad</label>
+            <input type="number" class="form-control mb-2" name="edad" value="{{ usuario.edad }}">
+
+            <label>Género</label>
+            <select name="genero" class="form-select mb-2">
+                <option value="hombre" {% if usuario.genero=='hombre' %}selected{% endif %}>Hombre</option>
+                <option value="mujer" {% if usuario.genero=='mujer' %}selected{% endif %}>Mujer</option>
+                <option value="otro" {% if usuario.genero=='otro' %}selected{% endif %}>Otro</option>
+            </select>
+
+            <label>Teléfono</label>
+            <input type="text" class="form-control mb-2" name="telefono" value="{{ usuario.telefono }}">
+
+            <label>Peso (kg)</label>
+            <input type="number" class="form-control mb-2" name="peso" value="{{ usuario.peso }}">
+
+            <label>Altura (cm)</label>
+            <input type="number" class="form-control mb-2" name="altura" value="{{ usuario.altura }}">
+
+            <button class="btn btn-success w-100 mt-3">Guardar cambios</button>
+          </form>
+
+          <!-- BOTÓN EDITAR / CANCELAR -->
+          <button id="btn-editar" class="btn btn-outline-primary w-100 mt-3">Editar</button>
+          <button id="btn-cancelar" class="btn btn-outline-secondary w-100 mt-3" style="display:none;">Cancelar</button>
+        </div>
+      </div>
+
+      <!-- COLUMNA DERECHA: PREFERENCIAS -->
+<div class="col-md-7">
+  <div class="border border-dark rounded-3 p-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4 class="text-uppercase" style="font-family: 'Jersey 20'">
+        Preferencias & Alergias
+      </h4>
+      <button class="btn btn-success btn-sm" id="btn-add-pref">Editar</button>
     </div>
 
-    <div>
-      <h4 class="text-uppercase">Objetivos y Actividad</h4>
-      <p><strong>Nivel de Actividad:</strong> {{ usuario.actividad }}</p>
-      <p><strong>Objetivo:</strong> {{ usuario.objetivo }}</p>
-      <p><strong>Preferencias/Restricciones:</strong> {{ usuario.preferencias }}</p>
-      <p><strong>Experiencia culinaria:</strong> {{ usuario.experiencia }}</p>
+    <!-- LISTA DE PREFERENCIAS -->
+    <div id="lista-preferencias">
+      {% if usuario.preferencias_lista %}
+        {% for pref in usuario.preferencias_lista %}
+          <p class="border-bottom py-1">{{ pref }}</p>
+        {% endfor %}
+      {% else %}
+        <p class="text-muted">No hay preferencias registradas.</p>
+      {% endif %}
     </div>
 
+    <!-- FORMULARIO PARA MODIFICAR PREFERENCIAS -->
+    <form action="{{ url_for('actualizar_preferencias') }}" method="POST"
+          id="form-pref" class="mt-3" style="display:none">
+
+      <!-- NIVEL DE ACTIVIDAD -->
+      <label class="text-uppercase" style="font-family:'Jersey 20'">
+        Nivel de actividad
+      </label>
+      <select class="form-select mb-3" name="actividad">
+        <option value="">Sin cambiar</option>
+        <option>Sedentario</option>
+        <option>Ligero</option>
+        <option>Moderado</option>
+        <option>Activo</option>
+        <option>Muy activo</option>
+      </select>
+
+      <!-- OBJETIVO -->
+      <label class="text-uppercase" style="font-family:'Jersey 20'">Objetivo</label>
+      <select class="form-select mb-3" name="objetivo">
+        <option value="">Sin cambiar</option>
+        <option>Bajar de peso</option>
+        <option>Aumentar masa muscular</option>
+        <option>Mantener peso</option>
+        <option>Mejorar digestión</option>
+        <option>Controlar condición</option>
+      </select>
+
+      <!-- ALERGIAS NUEVO -->
+      <label class="text-uppercase" style="font-family:'Jersey 20'">
+        Alergias comunes
+      </label>
+      <select class="form-select mb-3" name="alergias">
+        <option value="">Sin cambiar</option>
+        <option>Gluten</option>
+        <option>Lácteos</option>
+        <option>Nueces</option>
+        <option>Mariscos</option>
+        <option>Huevo</option>
+        <option>Soja</option>
+      </select>
+
+      <!-- EXPERIENCIA -->
+      <label class="text-uppercase" style="font-family:'Jersey 20'">
+        Experiencia culinaria
+      </label>
+      <select class="form-select mb-3" name="experiencia">
+        <option value="">Sin cambiar</option>
+        <option>Principiante</option>
+        <option>Intermedio</option>
+        <option>Chef aficionado</option>
+      </select>
+
+      <button class="btn btn-success w-100">Guardar</button>
+    </form>
+  </div>
+</div>
+
+
+    </div>
+
+    <!-- CERRAR SESIÓN -->
     <div class="text-center mt-4">
       <a href="{{ url_for('cerrarsesion') }}" class="btn btn-outline-danger">Cerrar sesión</a>
     </div>
   </div>
 </div>
+
+<!-- SCRIPT: EDITAR EN LUGAR -->
+<script>
+  const btnEditar = document.getElementById("btn-editar");
+  const btnCancelar = document.getElementById("btn-cancelar");
+  const datosView = document.getElementById("datos-view");
+  const datosEdit = document.getElementById("datos-edit");
+
+  btnEditar.addEventListener("click", function () {
+    datosView.style.display = "none";
+    datosEdit.style.display = "block";
+    btnEditar.style.display = "none";
+    btnCancelar.style.display = "block";
+  });
+
+  btnCancelar.addEventListener("click", function () {
+    datosView.style.display = "block";
+    datosEdit.style.display = "none";
+    btnEditar.style.display = "block";
+    btnCancelar.style.display = "none";
+  });
+</script>
+
+<!-- SCRIPT: MOSTRAR FORMULARIO DE PREFERENCIAS -->
+<script>
+  document.getElementById("btn-add-pref").addEventListener("click", function(){
+    const form = document.getElementById("form-pref");
+    form.style.display = form.style.display === "none" ? "block" : "none";
+  });
+</script>
+
 {% endblock %}

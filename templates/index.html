@@ -76,39 +76,41 @@
 
     <!-- Columna derecha -->
     <div class="col-md-3">
-      {% if session.usuario %}
-<div class="card mb-3 border shadow border-dark rounded-0">
-  <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">
-    ¡Bienvenido, {{ session.usuario['nombre'] }}!
-  </div>
-  <div class="card-body">
-    <p class="mb-2">Nos alegra verte de nuevo 😊</p>
-    <p>Explora tus recetas personalizadas, revisa tu progreso o consulta tu perfil.</p>
-    <div class="d-grid gap-2">
-      <a href="{{ url_for('perfil') }}" class="btn btn-sm btn-outline-success text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
-        Ir a mi perfil
-      </a>
+  {% if session.get('usuario') %}
+  <div class="card mb-3 border shadow border-dark rounded-0">
+    <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">
+      ¡Bienvenido, {{ session['usuario']['nombre'] }}!
+    </div>
+    <div class="card-body">
+      <p class="mb-2">Nos alegra verte de nuevo 😊</p>
+      <p>Explora tus recetas personalizadas, revisa tu progreso o consulta tu perfil.</p>
+      <div class="d-grid gap-2">
+        <a href="{{ url_for('perfil') }}" class="btn btn-sm btn-outline-success text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+          Ir a mi perfil
+        </a>
+      </div>
     </div>
   </div>
-</div>
-{% else %}
-<div class="card mb-3 border shadow border-dark rounded-0">
-  <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">
-    ¿Ya tienes una cuenta?
-  </div>
-  <div class="card-body">
-    <p>Inicia sesión para más funciones.</p>
-    <div class="d-grid gap-2">
-      <a href="{{ url_for('iniciosesion') }}" class="btn btn-sm btn-outline-dark text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
-        Iniciar sesión
-      </a>
-      <a href="{{ url_for('crearcuenta') }}" class="btn btn-sm btn-outline-secondary text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
-        Registrarse
-      </a>
+
+  {% else %}
+
+  <div class="card mb-3 border shadow border-dark rounded-0">
+    <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">
+      ¿Ya tienes una cuenta?
+    </div>
+    <div class="card-body">
+      <p>Inicia sesión para más funciones.</p>
+      <div class="d-grid gap-2">
+        <a href="{{ url_for('iniciosesion') }}" class="btn btn-sm btn-outline-dark text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+          Iniciar sesión
+        </a>
+        <a href="{{ url_for('crearcuenta') }}" class="btn btn-sm btn-outline-secondary text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+          Registrarse
+        </a>
+      </div>
     </div>
   </div>
-</div>
-{% endif %}
+  {% endif %}
 
       
       <div class="card mb-3 border shadow border-dark rounded-0">
