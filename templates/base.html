@@ -82,22 +82,17 @@
               >
             </li>
           </ul>
-          {% if session.usuario %}
+
+          {% if usuario_sesion %}
           <div class="dropdown">
             <button
               class="btn btn-outline-light dropdown-toggle text-uppercase"
               type="button"
-              id="userMenuButton"
               data-bs-toggle="dropdown"
-              aria-expanded="true"
-              style="font-family: 'Jersey 20', sans-serif"
             >
-              {{ session.usuario['nombre'] }}
+             👤 {{ usuario_sesion.nombre }}
             </button>
-            <ul
-              class="dropdown-menu dropdown-menu-end border-dark"
-              aria-labelledby="userMenuButton"
-            >
+            <ul class="dropdown-menu dropdown-menu-end border-dark">
               <li>
                 <a
                   class="dropdown-item text-uppercase"
@@ -120,17 +115,11 @@
             <button
               class="btn btn-outline-light dropdown-toggle text-uppercase"
               type="button"
-              id="userMenuButton"
               data-bs-toggle="dropdown"
-              aria-expanded="true"
-              style="font-family: 'Jersey 20', sans-serif"
             >
               Usuario
             </button>
-            <ul
-              class="dropdown-menu dropdown-menu-end border-dark"
-              aria-labelledby="userMenuButton"
-            >
+            <ul class="dropdown-menu dropdown-menu-end border-dark">
               <li>
                 <a
                   class="dropdown-item text-uppercase"
@@ -153,20 +142,24 @@
     </nav>
 
     <section class="m-3 p-3 bg-white border border-dark rounded-0">
-      {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    <div class="container mt-3">
-      {% for category, message in messages %}
-        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <div class="container mt-3">
+        {% for category, message in messages %}
+        <div
+          class="alert alert-{{ category }} alert-dismissible fade show"
+          role="alert"
+        >
           {{ message }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+          ></button>
         </div>
-      {% endfor %}
-    </div>
-  {% endif %}
-{% endwith %} 
-
-      {% block content %} {% endblock %}
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %} {% block content %} {% endblock %}
     </section>
 
     <script

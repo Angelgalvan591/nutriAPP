@@ -76,10 +76,10 @@
 
     <!-- Columna derecha -->
     <div class="col-md-3">
-  {% if session.get('usuario') %}
+  {% if usuario_sesion %}
   <div class="card mb-3 border shadow border-dark rounded-0">
     <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">
-      ¡Bienvenido, {{ session['usuario']['nombre'] }}!
+      ¡Bienvenido, {{ usuario_sesion.nombre }}!
     </div>
     <div class="card-body">
       <p class="mb-2">Nos alegra verte de nuevo 😊</p>
@@ -169,7 +169,7 @@
 
   document.getElementById("guardarBtn").addEventListener("click", () => {
     const enlace = document.createElement("a");
-    enlace.download = "mi_dibujo.png";
+    enlace.download = "mi_dibujo.jpg";
     enlace.href = canvas.toDataURL();
     enlace.click();
   });

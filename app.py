@@ -143,12 +143,11 @@ def crearcuenta():
 @app.route('/iniciosesion', methods=['GET', 'POST'])
 def iniciosesion():
     if request.method == 'POST':
-        identificador = request.form.get('nombre', '').strip()  # puede ser correo o teléfono
+        identificador = request.form.get('nombre', '').strip()
         contrasena = request.form.get('contraseña', '')
 
         usuario = get_usuario_por_correo_o_telefono(identificador)
         if usuario and check_password_hash(usuario['contrasena'], contrasena):
-            # Guardar solo el correo en sesión
             session['usuario_correo'] = usuario['correo']
             flash(f'Bienvenido de nuevo, {usuario["nombre"]}!', 'success')
             return redirect(url_for('perfil'))
@@ -156,6 +155,14 @@ def iniciosesion():
             flash('Correo/usuario o contraseña incorrectos.', 'danger')
 
     return render_template('iniciosesion.html')
+
+@app.context_processor
+def inject_user():
+    if 'usuario_correo' in session:
+        usuario = get_usuario_por_correo(session['usuario_correo'])
+        return dict(usuario_sesion=usuario)
+    return dict(usuario_sesion=None)
+
 
 @app.route('/perfil')
 @login_requerido
