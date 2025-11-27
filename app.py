@@ -10,6 +10,71 @@ app = Flask(__name__)
 API_KEY = "zHYga31MsqopFACKsNz8AWNXvs0h6tyKxULQ9hKz"
 API_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
 
+import requests
+
+USDA_API_KEY = "TU_API_KEY_AQUI"
+USDA_BASE_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
+
+def obtener_info_ingrediente(ingrediente, cantidad_gramos=100):
+    # Buscar ingrediente en USDA
+    search_params = {
+        "api_key": USDA_API_KEY,
+        "query": ingrediente,
+        "pageSize": 1
+    }
+
+    search = requests.get("https://api.nal.usda.gov/fdc/v1/foods/search", params=search_params)
+
+    if search.status_code != 200:
+        print("Error en búsqueda USDA:", search.text)
+        return None
+
+    datos = search.json()
+    if "foods" not in datos or len(datos["foods"]) == 0:
+        return None
+
+    food = datos["foods"][0]
+    fdc_id = food["fdcId"]
+
+    # Obtener detalle del alimento
+    detail_params = {"api_key": USDA_API_KEY}
+    detail = requests.get(USDA_BASE_URL + str(fdc_id), params=detail_params)
+
+    if detail.status_code != 200:
+        print("Error obteniendo detalles USDA:", detail.text)
+        return None
+
+    info = detail.json()
+
+    calorias = proteinas = grasas = carbohidratos = 0
+
+    for n in info.get("foodNutrients", []):
+        nombre = n.get("nutrient", {}).get("name", "")
+        valor = n.get("amount", 0)
+
+        if nombre == "Energy":
+            calorias = valor
+        elif nombre == "Protein":
+            proteinas = valor
+        elif nombre == "Total lipid (fat)":
+            grasas = valor
+        elif nombre == "Carbohydrate, by difference":
+            carbohidratos = valor
+
+    # USDA devuelve nutrientes por 100g → ajustamos según la cantidad
+    factor = cantidad_gramos / 100
+
+    return {
+        "fdc_id": fdc_id,
+        "ingrediente": ingrediente,
+        "cantidad_gramos": cantidad_gramos,
+        "calorias": calorias * factor,
+        "proteinas": proteinas * factor,
+        "grasas": grasas * factor,
+        "carbohidratos": carbohidratos * factor
+    }
+
+
 app.config['SECRET_KEY']='una_clave_secreta_muy_larga_y_compleja_1234567890'
 
 app.config['MYSQL_HOST'] = 'localhost'
@@ -18,6 +83,56 @@ app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'nutriapp_vogd'
 mysql = MySQL(app)
 
+def crear_tablas_recetas():
+    cursor = mysql.connection.cursor()
+    
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS recetas (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nombre VARCHAR(200) NOT NULL,
+            categoria VARCHAR(100) NOT NULL,
+            dificultad VARCHAR(50),
+            descripcion TEXT,
+            calorias_totales FLOAT,
+            proteinas FLOAT,
+            grasas FLOAT,
+            carbohidratos FLOAT
+        )
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS ingredientes_receta (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            receta_id INT,
+            ingrediente VARCHAR(200),
+            cantidad VARCHAR(100),
+            fdc_id INT,
+            FOREIGN KEY (receta_id) REFERENCES recetas(id) ON DELETE CASCADE
+        )
+    """)
+
+    mysql.connection.commit()
+    cursor.close()
+    
+def nutrientes_totales(ingredientes):
+    totales = {
+        "calorias": 0,
+        "proteinas": 0,
+        "grasas": 0,
+        "carbohidratos": 0
+    }
+
+    for ing in ingredientes:
+        info = obtener_info_ingrediente(ing)
+        if info:
+            totales["calorias"] += info["calorias"] or 0
+            totales["proteinas"] += info["proteinas"] or 0
+            totales["grasas"] += info["grasas"] or 0
+            totales["carbohidratos"] += info["carbohidratos"] or 0
+
+    return totales
+
+    
 def crear_tabla_usuarios():
     """Crea la tabla usuarios si no existe."""
     cursor = mysql.connection.cursor()
@@ -74,6 +189,8 @@ def login_requerido(func):
 # Crear tabla al iniciar
 with app.app_context():
     crear_tabla_usuarios()
+    crear_tablas_recetas()
+
 
 # Datos globales
 alimentos_caloricos = [
@@ -106,7 +223,7 @@ def crearcuenta():
         peso = request.form.get('peso') or None
         altura = request.form.get('altura') or None
 
-        # Validaciones básicas
+        # Validaciones
         if not nombre or not correo or not contrasena:
             flash("Por favor, completa los campos obligatorios.", "warning")
             return render_template('crearcuenta.html')
@@ -119,7 +236,7 @@ def crearcuenta():
             flash("Ya existe una cuenta con ese correo o teléfono.", "danger")
             return render_template('crearcuenta.html')
 
-        # Guardar en BD (hash de contraseña)
+        # hash de contraseña
         hash_pw = generate_password_hash(contrasena)
 
         cursor = mysql.connection.cursor()
@@ -156,6 +273,7 @@ def iniciosesion():
 
     return render_template('iniciosesion.html')
 
+# para agregar el usuario en todas las plantillas que necesite
 @app.context_processor
 def inject_user():
     if 'usuario_correo' in session:
@@ -295,11 +413,31 @@ def cerrarsesion():
     flash('Has cerrado sesión exitosamente.', 'info')
     return redirect(url_for('index'))
 
-
+# recetas
 @app.route('/recetas')
 @login_requerido
 def recetas():
-    return render_template('recetas.html')
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT * FROM recetas")
+    lista = cursor.fetchall()
+    cursor.close()
+    return render_template("recetas.html", recetas=lista)
+
+@app.route('/receta/<int:id>')
+@login_requerido
+def receta_detalle(id):
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+    cursor.execute("SELECT * FROM recetas WHERE id = %s", (id,))
+    receta = cursor.fetchone()
+
+    cursor.execute("SELECT * FROM ingredientes_receta WHERE receta_id = %s", (id,))
+    ingredientes = cursor.fetchall()
+
+    cursor.close()
+
+    return render_template("receta_detalle.html", receta=receta, ingredientes=ingredientes)
+
 
 # Clasificador de alimentos
 @app.route('/clasificador', methods=['GET', 'POST'])

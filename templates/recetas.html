@@ -1,4 +1,48 @@
 {% extends "base.html" %}
 {% block content %}
 
+<style>
+  .titulo-recetas {
+    font-family: 'Jersey 20', sans-serif;
+    font-size: 3rem;
+  }
+</style>
+
+<h2 class="text-center titulo-recetas text-success mb-4">Buscador de Recetas</h2>
+
+<input type="text" id="buscador" class="form-control mb-4" placeholder="Buscar receta...">
+
+<div class="row" id="recetas-container">
+  {% for r in recetas %}
+  <div class="col-md-4 mb-4 receta-item">
+    <div class="card shadow border border-success rounded-0">
+      <div class="card-body">
+        <h4 class="text-success" style="font-family: 'Jersey 20', sans-serif;">
+          {{ r.nombre }}
+        </h4>
+        <p class="mb-1"><strong>Categoría:</strong> {{ r.categoria }}</p>
+        <p class="mb-2"><strong>Dificultad:</strong> {{ r.dificultad }}</p>
+
+        <a href="{{ url_for('receta_detalle', id=r.id) }}" class="btn btn-outline-success w-100">
+          Preparar
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<script>
+  document.getElementById("buscador").addEventListener("input", function() {
+    let filtro = this.value.toLowerCase();
+    let cards = document.querySelectorAll(".receta-item");
+
+    cards.forEach(card => {
+      let texto = card.innerText.toLowerCase();
+      card.style.display = texto.includes(filtro) ? "" : "none";
+    });
+  });
+</script>
+
 {% endblock %}
+
