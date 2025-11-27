@@ -7,23 +7,19 @@ import MySQLdb.cursors
 
 app = Flask(__name__)
 
-API_KEY = "zHYga31MsqopFACKsNz8AWNXvs0h6tyKxULQ9hKz"
-API_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
-
-import requests
-
-USDA_API_KEY = "TU_API_KEY_AQUI"
-USDA_BASE_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
+USDA_API_KEY = "zHYga31MsqopFACKsNz8AWNXvs0h6tyKxULQ9hKz"
+SEARCH_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
+DETAIL_URL = "https://api.nal.usda.gov/fdc/v1/food/"
 
 def obtener_info_ingrediente(ingrediente, cantidad_gramos=100):
-    # Buscar ingrediente en USDA
+    # Buscar ingrediente
     search_params = {
         "api_key": USDA_API_KEY,
         "query": ingrediente,
         "pageSize": 1
     }
 
-    search = requests.get("https://api.nal.usda.gov/fdc/v1/foods/search", params=search_params)
+    search = requests.get(SEARCH_URL, params=search_params)
 
     if search.status_code != 200:
         print("Error en búsqueda USDA:", search.text)
@@ -33,15 +29,16 @@ def obtener_info_ingrediente(ingrediente, cantidad_gramos=100):
     if "foods" not in datos or len(datos["foods"]) == 0:
         return None
 
-    food = datos["foods"][0]
-    fdc_id = food["fdcId"]
+    fdc_id = datos["foods"][0]["fdcId"]
 
-    # Obtener detalle del alimento
-    detail_params = {"api_key": USDA_API_KEY}
-    detail = requests.get(USDA_BASE_URL + str(fdc_id), params=detail_params)
+    # Obtener detalle correcto
+    detail_params = {
+        "api_key": USDA_API_KEY
+    }
+    detail = requests.get(DETAIL_URL + str(fdc_id), params=detail_params)
 
     if detail.status_code != 200:
-        print("Error obteniendo detalles USDA:", detail.text)
+        print("Error detalles USDA:", detail.text)
         return None
 
     info = detail.json()
@@ -52,16 +49,15 @@ def obtener_info_ingrediente(ingrediente, cantidad_gramos=100):
         nombre = n.get("nutrient", {}).get("name", "")
         valor = n.get("amount", 0)
 
-        if nombre == "Energy":
+        if "Energy" in nombre:
             calorias = valor
-        elif nombre == "Protein":
+        elif "Protein" in nombre:
             proteinas = valor
-        elif nombre == "Total lipid (fat)":
+        elif "lipid" in nombre.lower():
             grasas = valor
-        elif nombre == "Carbohydrate, by difference":
+        elif "Carbohydrate" in nombre:
             carbohidratos = valor
 
-    # USDA devuelve nutrientes por 100g → ajustamos según la cantidad
     factor = cantidad_gramos / 100
 
     return {
@@ -73,6 +69,7 @@ def obtener_info_ingrediente(ingrediente, cantidad_gramos=100):
         "grasas": grasas * factor,
         "carbohidratos": carbohidratos * factor
     }
+
 
 
 app.config['SECRET_KEY']='una_clave_secreta_muy_larga_y_compleja_1234567890'
@@ -415,16 +412,14 @@ def cerrarsesion():
 
 # recetas
 @app.route('/recetas')
-@login_requerido
 def recetas():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT * FROM recetas")
-    lista = cursor.fetchall()
+    recetas = cursor.fetchall()
     cursor.close()
-    return render_template("recetas.html", recetas=lista)
 
+    return render_template('recetas.html', recetas=recetas)
 @app.route('/receta/<int:id>')
-@login_requerido
 def receta_detalle(id):
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
@@ -434,10 +429,28 @@ def receta_detalle(id):
     cursor.execute("SELECT * FROM ingredientes_receta WHERE receta_id = %s", (id,))
     ingredientes = cursor.fetchall()
 
-    cursor.close()
+    total_cal = total_prot = total_gras = total_carb = 0
 
-    return render_template("receta_detalle.html", receta=receta, ingredientes=ingredientes)
+    for ing in ingredientes:
+        nombre = ing["ingrediente"]
+        cantidad = float(ing["cantidad"])  # convertir a número
 
+        info = obtener_info_ingrediente(nombre, cantidad)
+
+        if info:
+            total_cal += info["calorias"]
+            total_prot += info["proteinas"]
+            total_gras += info["grasas"]
+            total_carb += info["carbohidratos"]
+
+    receta["calorias_totales"] = round(total_cal, 2)
+    receta["proteinas"] = round(total_prot, 2)
+    receta["grasas"] = round(total_gras, 2)
+    receta["carbohidratos"] = round(total_carb, 2)
+
+    return render_template("receta_detalle.html",
+                           receta=receta,
+                           ingredientes=ingredientes)
 
 # Clasificador de alimentos
 @app.route('/clasificador', methods=['GET', 'POST'])
