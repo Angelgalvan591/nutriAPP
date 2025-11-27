@@ -3,7 +3,7 @@ import requests
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
 import MySQLdb.cursors
-
+import re
 
 app = Flask(__name__)
 
@@ -70,10 +70,43 @@ def obtener_info_ingrediente(ingrediente, cantidad_gramos=100):
         "carbohidratos": carbohidratos * factor
     }
 
+def convertir_a_gramos(texto):
+    """
+    Convierte strings como '140 g', '1 taza', '2 piezas'
+    en gramos aproximados.
+    """
+    texto = texto.lower().strip()
 
+    # si contiene un número con unidades 
+    numero = re.findall(r"[\d\.]+", texto)
+    cantidad = float(numero[0]) if numero else 0
+
+    #  detectar unidades 
+    if "g" in texto or "gramo" in texto:
+        return cantidad
+    
+    if "kg" in texto:
+        return cantidad * 1000
+
+    # unidades comunes que NO son gramos 
+    if "taza" in texto:
+        return cantidad * 120  
+    
+    if "cucharada" in texto:
+        return cantidad * 15
+
+    if "cucharadita" in texto:
+        return cantidad * 5
+
+    if "pieza" in texto or "unidad" in texto:
+        return cantidad * 50      # estimado
+
+    # si no se reconoce → devolver número plano
+    return cantidad
 
 app.config['SECRET_KEY']='una_clave_secreta_muy_larga_y_compleja_1234567890'
 
+# Configuración de base de datos
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''  
@@ -107,6 +140,17 @@ def crear_tablas_recetas():
             FOREIGN KEY (receta_id) REFERENCES recetas(id) ON DELETE CASCADE
         )
     """)
+    
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS pasos_receta (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    receta_id INT NOT NULL,
+    numero_paso INT NOT NULL,
+    descripcion TEXT NOT NULL,
+    FOREIGN KEY (receta_id) REFERENCES recetas(id)
+        ON DELETE CASCADE
+        )
+        """)
 
     mysql.connection.commit()
     cursor.close()
@@ -204,6 +248,7 @@ alimentos_clasificados = []
 def index():
     return render_template('index.html')
 
+# Crear cuenta
 @app.route('/crearcuenta', methods=['GET', 'POST'])
 def crearcuenta():
     if request.method == 'POST':
@@ -254,6 +299,7 @@ def crearcuenta():
 
     return render_template('crearcuenta.html')
 
+# Inicio de sesión
 @app.route('/iniciosesion', methods=['GET', 'POST'])
 def iniciosesion():
     if request.method == 'POST':
@@ -278,7 +324,7 @@ def inject_user():
         return dict(usuario_sesion=usuario)
     return dict(usuario_sesion=None)
 
-
+# Perfil de usuario
 @app.route('/perfil')
 @login_requerido
 def perfil():
@@ -295,6 +341,7 @@ def perfil():
 
     return render_template('perfil.html', usuario=usuario)
 
+# Actualizar preferencias
 @app.route('/actualizar_preferencias', methods=['POST'])
 @login_requerido
 def actualizar_preferencias():
@@ -305,23 +352,19 @@ def actualizar_preferencias():
         flash('Usuario no encontrado.', 'danger')
         return redirect(url_for('iniciosesion'))
 
-    # Preferencias ya guardadas en la BD
     prefs_text = usuario.get('preferencias') or ""
     prefs_dict = {}
 
-    # Convertir "Clave:Valor" → diccionario
     for parte in prefs_text.split(";"):
         if ":" in parte:
             key, val = parte.split(":", 1)
             prefs_dict[key] = val
 
-    # Nuevos valores enviados
     actividad = request.form.get("actividad", "").strip()
     objetivo = request.form.get("objetivo", "").strip()
     alergias = request.form.get("alergias", "").strip()
     experiencia = request.form.get("experiencia", "").strip()
 
-    # Si vinieron valores nuevos, reemplazan los existentes
     if actividad:
         prefs_dict["Actividad"] = actividad
     if objetivo:
@@ -331,7 +374,6 @@ def actualizar_preferencias():
     if alergias:
         prefs_dict["Alergias"] = alergias
 
-    # Convertir de vuelta a texto
     nuevo_texto = ";".join([f"{k}:{v}" for k, v in prefs_dict.items()])
 
     cursor = mysql.connection.cursor()
@@ -343,7 +385,7 @@ def actualizar_preferencias():
     flash("Preferencias actualizadas con éxito", "success")
     return redirect(url_for("perfil"))
 
-
+# Añadir preferencia
 @app.route('/añadir_preferencia', methods=['POST'])
 @login_requerido
 def anadir_preferencia():
@@ -367,6 +409,7 @@ def anadir_preferencia():
     flash('Preferencia añadida.', 'success')
     return redirect(url_for('perfil'))
 
+# Editar datos de usuario
 @app.route('/editar_usuario', methods=['POST'])
 @login_requerido
 def editar_usuario():
@@ -403,7 +446,7 @@ def editar_usuario():
     flash('Datos de usuario actualizados.', 'success')
     return redirect(url_for('perfil'))
 
-
+# Cerrar sesión
 @app.route('/cerrarsesion')
 def cerrarsesion():
     session.pop('usuario_correo', None)
@@ -419,6 +462,7 @@ def recetas():
     cursor.close()
 
     return render_template('recetas.html', recetas=recetas)
+
 @app.route('/receta/<int:id>')
 def receta_detalle(id):
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -428,14 +472,19 @@ def receta_detalle(id):
 
     cursor.execute("SELECT * FROM ingredientes_receta WHERE receta_id = %s", (id,))
     ingredientes = cursor.fetchall()
+    
+    cursor.execute("SELECT * FROM pasos_receta WHERE receta_id = %s ORDER BY numero_paso ASC", (id,))
+    pasos = cursor.fetchall()
 
     total_cal = total_prot = total_gras = total_carb = 0
 
     for ing in ingredientes:
         nombre = ing["ingrediente"]
-        cantidad = float(ing["cantidad"])  # convertir a número
+        
+        # convertir texto → gramos
+        cantidad_gramos = convertir_a_gramos(ing["cantidad"])
 
-        info = obtener_info_ingrediente(nombre, cantidad)
+        info = obtener_info_ingrediente(nombre, cantidad_gramos)
 
         if info:
             total_cal += info["calorias"]
@@ -448,9 +497,14 @@ def receta_detalle(id):
     receta["grasas"] = round(total_gras, 2)
     receta["carbohidratos"] = round(total_carb, 2)
 
-    return render_template("receta_detalle.html",
-                           receta=receta,
-                           ingredientes=ingredientes)
+    return render_template(
+        "receta_detalle.html",
+        receta=receta,
+        ingredientes=ingredientes,
+        pasos=pasos
+    )
+
+
 
 # Clasificador de alimentos
 @app.route('/clasificador', methods=['GET', 'POST'])
@@ -615,7 +669,6 @@ def analizador():
                 calorias += 70
                 carbohidratos += 15
             
-
         resultado = f"""
         <strong>{nombre.title()}</strong><br>
         Calorías estimadas: {calorias} kcal<br>

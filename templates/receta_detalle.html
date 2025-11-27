@@ -1,9 +1,11 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
 <div class="container">
   <div class="card border-success shadow">
-    <div class="card-header bg-success text-white" style="font-family:'Jersey 20'; font-size: 2rem;">
+    <div
+      class="card-header bg-success text-white"
+      style="font-family: 'Jersey 20'; font-size: 2rem"
+    >
       {{ receta.nombre }}
     </div>
 
@@ -15,16 +17,23 @@
       <h5 class="mt-4 text-success">Ingredientes</h5>
       <ul>
         {% for ing in ingredientes %}
-          <li>{{ ing.cantidad }} - {{ ing.ingrediente }}</li>
+        <li>{{ ing.cantidad }} - {{ ing.ingrediente }}</li>
         {% endfor %}
       </ul>
 
+      <h5>Pasos</h5>
+      <ol>
+        {% for p in pasos %}
+        <li>{{ p.descripcion }}</li>
+        {% endfor %}
+      </ol>
+
       <h5 class="mt-4 text-success">Información nutricional</h5>
       <ul>
-        <li><strong>Calorías totales:</strong> {{ receta.calorias_totales }} kcal</li>
-        <li><strong>Proteínas:</strong> {{ receta.proteinas }} g</li>
-        <li><strong>Grasas:</strong> {{ receta.grasas }} g</li>
-        <li><strong>Carbohidratos:</strong> {{ receta.carbohidratos }} g</li>
+        <li>Calorías: {{ receta.calorias_totales }}</li>
+        <li>Proteínas: {{ receta.proteinas }}</li>
+        <li>Grasas: {{ receta.grasas }}</li>
+        <li>Carbohidratos: {{ receta.carbohidratos }}</li>
       </ul>
     </div>
   </div>
