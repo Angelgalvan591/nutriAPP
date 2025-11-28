@@ -1,58 +1,77 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container text-center">
-  <h2 class="text-danger mb-4">Calcula tu peso ideal</h2>
-
-  <form method="POST" action="{{ url_for('pesoideal') }}">
-    <div class="mb-3">
-      <label class="form-label">Género</label><br>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="genero" value="masculino" required>
-        <label class="form-check-label">Masculino</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="genero" value="femenino" required>
-        <label class="form-check-label">Femenino</label>
-      </div>
+<div class="container my-5 text-center" style="font-family:'Jersey 20', sans-serif;">
+  <div class="card shadow-lg border-0 mx-auto" style="max-width:500px; background-color:#f3e5d0;">
+    <div class="card-header text-white fw-bold" style="background-color:#b48a6e;">
+      Calculadora de Peso Ideal
     </div>
 
-    <div class="mb-3">
-      <label class="form-label">Edad</label>
-      <input type="number" name="edad" class="form-control text-center" placeholder="Ej: 35 años" required>
+    <div class="card-body">
+      <form method="POST" action="{{ url_for('pesoideal') }}">
+
+        <div class="mb-3">
+          <label class="form-label" style="color:#5c3d2e;">Género</label><br>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="genero" value="masculino" required>
+            <label class="form-check-label" style="color:#5c3d2e;">Masculino</label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="genero" value="femenino" required>
+            <label class="form-check-label" style="color:#5c3d2e;">Femenino</label>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" style="color:#5c3d2e;">Edad</label>
+          <input type="number" name="edad" class="form-control text-center"
+                 style="background-color:#fff7ef; border-color:#d7b89c;" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" style="color:#5c3d2e;">Altura (cm)</label>
+          <input type="number" name="altura" class="form-control text-center"
+                 style="background-color:#fff7ef; border-color:#d7b89c;" required>
+        </div>
+
+        <button class="fw-bold w-100"
+                style="background-color:#b48a6e; border:none; color:white;">
+          Calcular
+        </button>
+      </form>
+    </div>
+  </div>
+
+   <div class="text-center mt-3">
+        <a href="{{ url_for('calculadoras') }}" class="btn btn-outline-dark">⬅ Volver a Calculadoras</a>
     </div>
 
-    <div class="mb-3">
-      <label class="form-label">Estatura (cm)</label>
-      <input type="number" name="altura" class="form-control text-center" placeholder="Ej: 165 cm" required>
-    </div>
-
-    <button type="submit" class="btn btn-primary">CALCULAR</button>
-  </form>
-</div>
-
-{% if resultado %}
-<div class="container text-center mt-5">
-  <div class="card border-dark mx-auto bg-white" style="max-width: 500px;">
-    <div class="card-body d-flex align-items-center">
+  {% if resultado %}
+  <div class="card shadow-lg border-0 mx-auto mt-4" style="max-width:500px; background-color:#fff7ef;">
+    <div class="card-body d-flex">
       <div class="me-3">
-        <div class="bg-primary rounded-circle d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+        <div class="rounded-circle d-flex justify-content-center align-items-center"
+             style="width:60px; height:60px; background-color:#d7b89c;">
           <span class="text-white fs-3">^_^</span>
         </div>
       </div>
+
       <div class="text-start">
-        <h5 class="text-danger fw-bold">RESULTADO:</h5>
-        <p class="mb-1 text-dark" style="font-family: 'Press Start 2P', monospace;">
-          {{ resultado }}
-        </p>
+        <h5 class="fw-bold" style="color:#5c3d2e;">RESULTADO:</h5>
+        <p style="color:#5c3d2e;">{{ resultado }}</p>
         <p class="text-muted small">
-          Este rango se basa en el IMC normal. Puede variar según edad, masa muscular y actividad física.
+          Basado en IMC normal y proporciones corporales.
         </p>
       </div>
     </div>
-    <div class="card-footer bg-light">
-      <a href="{{ url_for('pesoideal') }}" class="btn btn-dark">CALCULAR DE NUEVO</a>
+
+    <div class="card-footer" style="background-color:#f3e5d0;">
+      <a href="{{ url_for('pesoideal') }}" class="btn btn-outline-dark">Calcular de nuevo</a>
     </div>
+    
   </div>
+  {% endif %}
 </div>
-{% endif %}
 {% endblock %}
+

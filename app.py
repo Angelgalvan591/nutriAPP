@@ -504,8 +504,6 @@ def receta_detalle(id):
         pasos=pasos
     )
 
-
-
 # Clasificador de alimentos
 @app.route('/clasificador', methods=['GET', 'POST'])
 @login_requerido
@@ -544,28 +542,6 @@ def sabermas():
 @app.route('/calculadoras')
 def calculadoras():
     return render_template('calculadoras.html')
-
-@app.route('/gastoenergetico', methods=['GET', 'POST'])
-def gastoenergetico():
-    if request.method == 'POST':
-        peso = float(request.form['peso'])
-        altura = float(request.form['altura'])
-        edad = int(request.form['edad'])
-        genero = request.form['genero']
-        actividad = float(request.form['actividad'])
-
-        if genero == 'hombre':
-            tmb = 88.36 + (13.4 * peso) + (4.8 * altura) - (5.7 * edad)
-        else:
-            tmb = 447.6 + (9.2 * peso) + (3.1 * altura) - (4.3 * edad)
-
-        resultado = round(tmb * actividad, 2)
-        tmb = round(tmb, 2)
-
-        return render_template('gastoenergetico.html', tmb=tmb, resultado=resultado)
-
-    return render_template('gastoenergetico.html')
-
 
 #  IMC
 @app.route('/imc', methods=['GET', 'POST'])
@@ -643,41 +619,6 @@ def macronutrientes():
         carbohidratos = (calorias * 0.45) / 4
         resultado = f"Proteínas: {proteinas:.1f}g | Grasas: {grasas:.1f}g | Carbohidratos: {carbohidratos:.1f}g"
     return render_template('macronutrientes.html', resultado=resultado)
-
-@app.route('/analizador', methods=['GET', 'POST'])
-def analizador():
-    resultado = None
-    if request.method == 'POST':
-        nombre = request.form['nombre']
-        ingredientes = request.form['ingredientes'].lower().split(',')
-
-        # Simulación básica
-        calorias = 0
-        proteinas = 0
-        grasas = 0
-        carbohidratos = 0
-
-        for item in ingredientes:
-            item = item.strip()
-            if "pollo" in item:
-                calorias += 165
-                proteinas += 31
-            elif "queso" in item:
-                calorias += 100
-                grasas += 8
-            elif "tortilla" in item:
-                calorias += 70
-                carbohidratos += 15
-            
-        resultado = f"""
-        <strong>{nombre.title()}</strong><br>
-        Calorías estimadas: {calorias} kcal<br>
-        Proteínas: {proteinas}g<br>
-        Grasas: {grasas}g<br>
-        Carbohidratos: {carbohidratos}g
-        """
-
-    return render_template('analizador.html', resultado=resultado)
 
 if __name__ == '__main__':
     app.run(debug=True)

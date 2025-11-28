@@ -1,41 +1,47 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container my-5">
-  <div class="card shadow-lg border-dark">
-    <div class="card-header text-white text-center fw-bold" style="background-color: #28a745;">
+<div class="container my-5" style="font-family:'Jersey 20', sans-serif;">
+  <div class="card shadow-lg border-0" style="background-color:#f3e5d0;">
+    <div class="card-header text-center fw-bold text-white" style="background-color:#b48a6e;">
       Calculadora Nutricional
     </div>
-    <div class="card-body bg-light">
+
+    <div class="card-body">
       <form method="POST" action="{{ url_for('macronutrientes') }}" class="row g-3">
 
         <div class="col-md-4">
-          <label for="edad" class="form-label">Edad</label>
-          <input type="number" name="edad" id="edad" class="form-control" placeholder="Ej: 30" required>
+          <label class="form-label" style="color:#5c3d2e;">Edad</label>
+          <input type="number" name="edad" class="form-control"
+                 style="background-color:#fff7ef; border-color:#d7b89c; color:#5c3d2e;" required>
         </div>
 
         <div class="col-md-4">
-          <label for="sexo" class="form-label">Sexo</label>
-          <select name="sexo" id="sexo" class="form-select" required>
-            <option value="" disabled selected>Selecciona una opción</option>
+          <label class="form-label" style="color:#5c3d2e;">Sexo</label>
+          <select name="sexo" class="form-select"
+                  style="background-color:#fff7ef; border-color:#d7b89c; color:#5c3d2e;" required>
+            <option disabled selected>Selecciona una opción</option>
             <option value="masculino">Masculino</option>
             <option value="femenino">Femenino</option>
           </select>
         </div>
 
         <div class="col-md-4">
-          <label for="peso" class="form-label">Peso (kg)</label>
-          <input type="number" name="peso" id="peso" class="form-control" placeholder="Ej: 70" required>
+          <label class="form-label" style="color:#5c3d2e;">Peso (kg)</label>
+          <input type="number" name="peso" class="form-control"
+                 style="background-color:#fff7ef; border-color:#d7b89c; color:#5c3d2e;" required>
         </div>
 
         <div class="col-md-4">
-          <label for="altura" class="form-label">Altura (cm)</label>
-          <input type="number" name="altura" id="altura" class="form-control" placeholder="Ej: 165" required>
+          <label class="form-label" style="color:#5c3d2e;">Altura (cm)</label>
+          <input type="number" name="altura" class="form-control"
+                 style="background-color:#fff7ef; border-color:#d7b89c; color:#5c3d2e;" required>
         </div>
 
         <div class="col-md-4">
-          <label for="actividad" class="form-label">Nivel de actividad</label>
-          <select name="actividad" id="actividad" class="form-select" required>
-            <option value="" disabled selected>Selecciona una opción</option>
+          <label class="form-label" style="color:#5c3d2e;">Actividad</label>
+          <select name="actividad" class="form-select"
+                  style="background-color:#fff7ef; border-color:#d7b89c; color:#5c3d2e;" required>
+            <option disabled selected>Selecciona una opción</option>
             <option value="1.2">Sedentario</option>
             <option value="1.375">Ligero</option>
             <option value="1.55">Moderado</option>
@@ -45,9 +51,10 @@
         </div>
 
         <div class="col-md-4">
-          <label for="objetivo" class="form-label">Objetivo</label>
-          <select name="objetivo" id="objetivo" class="form-select" required>
-            <option value="" disabled selected>Selecciona una opción</option>
+          <label class="form-label" style="color:#5c3d2e;">Objetivo</label>
+          <select name="objetivo" class="form-select"
+                  style="background-color:#fff7ef; border-color:#d7b89c; color:#5c3d2e;" required>
+            <option disabled selected>Selecciona una opción</option>
             <option value="mantener">Mantener peso</option>
             <option value="bajar">Bajar grasa</option>
             <option value="subir">Subir masa muscular</option>
@@ -55,26 +62,29 @@
         </div>
 
         <div class="col-12 d-grid">
-          <button type="submit" class="btn btn-success">Calcular</button>
+          <button class="fw-bold"
+                  style="background-color:#b48a6e; color:white; border:none;">
+            Calcular
+          </button>
         </div>
       </form>
 
       {% if resultado %}
-      <div class="mt-5">
-        <div class="card border-0 shadow-sm mx-auto" style="max-width: 500px;">
-          <div class="card-body d-flex align-items-start">
+      <div class="mt-4">
+        <div class="card shadow-sm border-0 mx-auto" style="max-width:500px; background-color:#fff7ef;">
+          <div class="card-body d-flex">
             <div class="me-3">
-              <div class="bg-primary rounded-circle d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+              <div class="rounded-circle d-flex justify-content-center align-items-center"
+                   style="width:60px; height:60px; background-color:#d7b89c;">
                 <span class="text-white fs-3 fw-bold">(●'◡'●)</span>
               </div>
             </div>
-            <div class="text-start">
-              <h5 class="text-dark fw-bold mb-2">RESULTADO NUTRICIONAL:</h5>
-              <p class="mb-1 text-dark" style="font-size: 1rem;">
-                {{ resultado|safe }}
-              </p>
+
+            <div>
+              <h5 class="fw-bold" style="color:#5c3d2e;">RESULTADO NUTRICIONAL:</h5>
+              <p style="color:#5c3d2e;">{{ resultado|safe }}</p>
               <p class="text-muted small">
-                Estos valores son estimados según tu perfil y objetivo. Para ajustes personalizados, consulta a un profesional.
+                Resultados estimados según tu perfil.
               </p>
             </div>
           </div>
@@ -83,5 +93,9 @@
       {% endif %}
     </div>
   </div>
+  
+  <div class="text-center mt-3">
+        <a href="{{ url_for('calculadoras') }}" class="btn btn-outline-dark">⬅ Volver a Calculadoras</a>
+    </div>
 </div>
 {% endblock %}
