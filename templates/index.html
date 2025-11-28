@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+
 <h1 class="text-uppercase text-center" style="font-family: 'Jersey 20', sans-serif; color: #1e1a15;">
-       🦦 Bienvenido a NutriApp 🦦
-      </h1>
-<div class="container my-4 font-monospace" >
+  🦦 Bienvenido a NutriApp 🦦
+</h1>
+
+<div class="container my-4 font-monospace">
   <div class="row g-3">
 
     <!-- Columna izquierda -->
@@ -11,54 +13,71 @@
 
       <div class="card mb-3 shadow border border-dark rounded-0">
         <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
-         ¿Con que funciones cuenta NutriApp?
+          ¿Con qué funciones cuenta NutriApp?
         </div>
         <div class="card-body">
           <p>NutriApp te ofrece las siguientes funciones:</p>
           <ul>
-            <li>Contador de calorias</li>
-            <li>Calculadora de gasto energetico</li>
+            <li>Contador de calorías</li>
+            <li>Calculadora de gasto energético</li>
             <li>Recetas saludables</li>
-            <li>Aarticulos para saber mas</li>
+            <li>Artículos informativos</li>
             <li>Lienzo interactivo para crear arte</li>
           </ul>
         </div>
       </div>
 
       <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">Nuestro plan de recetas</div>
+        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
+          Nuestro plan de recetas
+        </div>
         <div class="card-body">
-          <p>Estamos trabajando para ampliar nuestra base de datos de recetas saludables aun si eres nuevo cocinando o eres todo un chef experto. Podrás disfrutar de una variedad aún mayor de opciones deliciosas, nutritivas y que requieren pocos o varios ingredientes dependiendo la complejidad.</p>
+          <p>Estamos trabajando para ampliar nuestra base de datos de recetas saludables. Ya seas nuevo cocinando o un chef experto, encontrarás una variedad nutritiva para todos los niveles.</p>
         </div>
       </div>
-    </nav>
-    
-    </div>
+
+      <div class="card mb-3 border shadow border-dark rounded-0">
+        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
+          Analizador de Recetas Personalizadas
+        </div>
+        <div class="card-body">
+          <p>¿Tienes una receta favorita que te gustaría evaluar? Ingresa tus ingredientes y te diremos el valor nutricional.</p>
+          <p>¡Prueba el Analizador de Recetas hoy!</p>
+          <div class="d-grid gap-2">
+            <a href="{{ url_for('analizador') }}" class="btn btn-sm btn-outline-dark text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+              Ir al Analizador de Recetas
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- Columna izquierda -->
 
     <!-- Columna central -->
     <div class="col-md-6">
 
       <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #bc9c7b; font-family: 'Jersey 20', sans-serif;">¿Que es NutriApp?</div>
+        <div class="card-header text-white text-uppercase" style="background-color: #bc9c7b; font-family: 'Jersey 20', sans-serif;">
+          ¿Qué es NutriApp?
+        </div>
         <div class="card-body">
-          <div class="text-center mb-3">
-          </div>
-          <p>NutriApp esta pensadaa en ser una alternativa gratuina para las aplicaciones nutricionales de Pago que usualmente estan fuera del presupuesto de la mayoria de usuarios.
-            Con NutriApp podras llevar un control de tus calorias consumidas, conocer tu gasto energetico diario, encontrar recetas saludables y divertirte creando tu propio arte en nuestro lienzo interactivo.
-            Todo esto sin ningun costo, porque creemos que el acceso a herramientas para una vida saludable debe ser para todos.
+          <p>
+            NutriApp busca ser una alternativa gratuita a las apps nutricionales de pago. 
+            Podrás llevar el control de tus calorías, conocer tu gasto energético diario, ver recetas saludables y divertirte dibujando en un lienzo interactivo.
           </p>
+          <p>Todo sin costo. Creemos que la salud debe ser accesible para todos.</p>
         </div>
       </div>
 
       <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #bc9c7b; font-family: 'Jersey 20', sans-serif;">Arte de los Usuarios</div>
+        <div class="card-header text-white text-uppercase" style="background-color: #bc9c7b; font-family: 'Jersey 20', sans-serif;">
+          Arte de los Usuarios
+        </div>
         <div class="card-body text-center">
           <p>¡Crea tu propio arte! Usa el lienzo para dibujar lo que quieras 🦦</p>
 
-          <!-- Lienzo para dibujar -->
-          <div class="">
-            <canvas id="dibujo" width="400" height="300" style="border: 2px solid #000; background-color: white; cursor: crosshair;"></canvas>
-          </div>
+          <canvas id="dibujo" width="400" height="300" style="border: 2px solid #000; background-color:white; cursor:crosshair;"></canvas>
+
           <div class="mt-3 d-flex justify-content-center gap-2">
             <button class="btn btn-sm btn-outline-dark" id="limpiarBtn">Limpiar</button>
             <button class="btn btn-sm btn-outline-dark" id="guardarBtn">Guardar</button>
@@ -66,66 +85,59 @@
         </div>
       </div>
 
-      <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #bc9c7b; font-family: 'Jersey 20', sans-serif;">Creada por:</div>
-        <div class="card-body">
-          <p>Galvan Diaz Giancarlo Y Wendy Judith Vazquez Ortiz</p>
-        </div>
-      </div>
-    </div>
+    </div> <!-- Columna central -->
 
     <!-- Columna derecha -->
     <div class="col-md-3">
-  {% if usuario_sesion %}
-  <div class="card mb-3 border shadow border-dark rounded-0">
-    <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
-      ¡Bienvenido, {{ usuario_sesion.nombre }}!
-    </div>
-    <div class="card-body">
-      <p class="mb-2">Nos alegra verte de nuevo 😊</p>
-      <p>Explora tus recetas personalizadas, revisa tu progreso o consulta tu perfil.</p>
-      <div class="d-grid gap-2">
-        <a href="{{ url_for('perfil') }}" class="btn btn-sm btn-outline-success text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
-          Ir a mi perfil
-        </a>
-      </div>
-    </div>
-  </div>
 
-  {% else %}
-
-  <div class="card mb-3 border shadow border-dark rounded-0">
-    <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
-      ¿Ya tienes una cuenta?
-    </div>
-    <div class="card-body">
-      <p>Inicia sesión para más funciones.</p>
-      <div class="d-grid gap-2">
-        <a href="{{ url_for('iniciosesion') }}" class="btn btn-sm btn-outline-dark text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
-          Iniciar sesión
-        </a>
-        <a href="{{ url_for('crearcuenta') }}" class="btn btn-sm btn-outline-secondary text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
-          Registrarse
-        </a>
-      </div>
-    </div>
-  </div>
-  {% endif %}
-
-      
+      {% if usuario_sesion %}
       <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">Informacion del usuario</div>
+        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
+          ¡Bienvenido, {{ usuario_sesion.nombre }}!
+        </div>
         <div class="card-body">
-          <p>Tu informacion estra protegida con nosotros, siendo usada solo para ayudarte a lograr tus metas.</p>
-          <p>¡Tu salud y privacidad son nuestra prioridad!</p>
+          <p class="mb-2">Nos alegra verte de nuevo 😊</p>
+          <p>Explora tus recetas, revisa tu progreso o consulta tu perfil.</p>
+          <a href="{{ url_for('perfil') }}" class="btn btn-sm btn-outline-success text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+            Ir a mi perfil
+          </a>
         </div>
       </div>
 
-
-    <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">Contacto</div>
+      {% else %}
+      <div class="card mb-3 border shadow border-dark rounded-0">
+        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
+          ¿Ya tienes una cuenta?
+        </div>
         <div class="card-body">
-          <p>Si te comunicas con nosotros por estas redes tienes un 50% más de probabilidad de tener respuesta rápido:</p>
+          <p>Inicia sesión para más funciones.</p>
+          <div class="d-grid gap-2">
+            <a href="{{ url_for('iniciosesion') }}" class="btn btn-sm btn-outline-dark text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+              Iniciar sesión
+            </a>
+            <a href="{{ url_for('crearcuenta') }}" class="btn btn-sm btn-outline-secondary text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+              Registrarse
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="card mb-3 border shadow border-dark rounded-0">
+        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
+          Información del usuario
+        </div>
+        <div class="card-body">
+          <p>Tu información está segura y solo se usa para ayudarte en tus objetivos.</p>
+        </div>
+      </div>
+
+      <div class="card mb-3 border shadow border-dark rounded-0">
+        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
+          Contacto
+        </div>
+        <div class="card-body">
+          <p>Contáctanos por estas redes:</p>
           <ul class="list-unstyled">
             <li><a href="https://www.facebook.com/angel.galvan.37550">Facebook de Angel</a></li>
             <li><a href="https://www.facebook.com/yui.chan.uwu.awuadecanela">Facebook de Judith</a></li>
@@ -134,10 +146,12 @@
           </ul>
         </div>
       </div>
-    </nav>
 
-  </div>
-</div>
+    </div> <!-- Columna derecha -->
+
+  </div> <!-- row -->
+</div> <!-- container -->
+
 
 <script>
   const canvas = document.getElementById("dibujo");
@@ -175,6 +189,4 @@
   });
 </script>
 
-  </body>
-</html>
 {% endblock %}

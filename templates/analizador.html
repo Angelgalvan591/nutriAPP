@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container my-5" style="font-family: 'Jersey 20', sans-serif;">
+
+  <h2 class="text-center mb-4" style="color:#5b4636;">🦦 Analizador de Recetas Personalizadas 🦦</h2>
+
+  <!-- FORMULARIO -->
+  <div class="card shadow border-0 mb-4" style="border:1px solid #b89a7d;">
+    <div class="card-header text-white" style="background-color:#8b6f52;">
+      Agrega tus ingredientes
+    </div>
+
+    <div class="card-body">
+
+      <form method="POST">
+
+        <div id="ingredientes-lista">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <input name="ingrediente[]" class="form-control" placeholder="Ej: Manzana" required>
+            </div>
+            <div class="col-md-4">
+              <input name="cantidad[]" class="form-control" placeholder="Ej: 120 g" required>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-sm text-white" 
+                style="background-color:#b89a7d;" 
+                onclick="agregarIngrediente()">
+          ➕ Agregar otro ingrediente
+        </button>
+
+        <button type="submit" class="btn btn-dark float-end">
+          Analizar
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  {% if mostrar_resultado %}
+
+  <!-- RESULTADOS -->
+  <div class="card shadow border-0" style="border:1px solid #b89a7d;">
+    <div class="card-header text-white" style="background-color:#8b6f52;">
+      Resultado Nutricional
+    </div>
+    <div class="card-body">
+
+      <table class="table table-bordered text-center">
+        <thead class="table-light">
+          <tr>
+            <th>Ingrediente</th>
+            <th>Calorías</th>
+            <th>Proteínas</th>
+            <th>Grasas</th>
+            <th>Carbohidratos</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in ingredientes %}
+          <tr>
+            <td>{{ i.ingrediente }} ({{ i.cantidad_gramos }} g)</td>
+            <td>{{ i.calorias|round(2) }}</td>
+            <td>{{ i.proteinas|round(2) }}</td>
+            <td>{{ i.grasas|round(2) }}</td>
+            <td>{{ i.carbohidratos|round(2) }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot style="background-color:#f6efe7;">
+          <tr>
+            <td><strong>Total</strong></td>
+            <td><strong>{{ totales.calorias|round(2) }}</strong></td>
+            <td><strong>{{ totales.proteinas|round(2) }}</strong></td>
+            <td><strong>{{ totales.grasas|round(2) }}</strong></td>
+            <td><strong>{{ totales.carbohidratos|round(2) }}</strong></td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <!-- FORM PARA GUARDAR -->
+      <form action="{{ url_for('guardar_receta_personalizada') }}" method="POST" class="mt-4">
+
+        <h5 style="color:#5b4636;">Guardar Receta</h5>
+
+        <input name="nombre" class="form-control mb-3" placeholder="Nombre de tu receta" required>
+
+        <textarea name="descripcion" class="form-control mb-3" placeholder="Descripción..." required></textarea>
+
+        {% for i in ingredientes %}
+        <input type="hidden" name="ingrediente[]" value="{{ i.ingrediente }}">
+        <input type="hidden" name="cantidad[]" value="{{ i.cantidad_gramos }}">
+        {% endfor %}
+
+        <button class="btn btn-success w-100">Guardar receta ❤️</button>
+
+      </form>
+
+    </div>
+  </div>
+
+  {% endif %}
+
+</div>
+
+<script>
+  function agregarIngrediente() {
+    let contenedor = document.getElementById("ingredientes-lista");
+    let fila = `
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <input name="ingrediente[]" class="form-control" placeholder="Ej: Huevo" required>
+        </div>
+        <div class="col-md-4">
+          <input name="cantidad[]" class="form-control" placeholder="Ej: 2 piezas" required>
+        </div>
+      </div>
+    `;
+    contenedor.insertAdjacentHTML("beforeend", fila);
+  }
+</script>
+
+{% endblock %}

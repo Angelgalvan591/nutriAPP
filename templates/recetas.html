@@ -8,24 +8,49 @@
   }
 </style>
 
-<h2 class="text-center titulo-recetas mb-4" style="color: #352c23 ;">🦦 Buscador de Recetas 🦦</h2>
+<h2 class="text-center titulo-recetas mb-4" style="color: #5b4636;">
+  🦦 Buscador de Recetas 🦦
+</h2>
 
-<input type="text" id="buscador" class="form-control mb-4" placeholder="Buscar receta...">
+<div class="input-group mb-4 shadow-sm">
+  <span class="input-group-text" style="background-color: #d8c4b0; border-color: #b89a7d;">
+    🔎
+  </span>
+  <input 
+    type="text" 
+    id="buscador" 
+    class="form-control" 
+    placeholder="Buscar receta..."
+    style="background-color: #f6efe7; border-color: #b89a7d;"
+  >
+</div>
 
 <div class="row" id="recetas-container">
   {% for r in recetas %}
   <div class="col-md-4 mb-4 receta-item">
-    <div class="card shadow border rounded-0">
+    <div class="card shadow border-0" style="border: 1px solid #b89a7d;">
       <div class="card-body">
-        <h4 style="font-family: 'Jersey 20', sans-serif; color: #86694a ;">
+
+        <h4 style="font-family: 'Jersey 20', sans-serif; color: #7a5c3e;">
           {{ r.nombre }}
         </h4>
+
         <p class="mb-1"><strong>Categoría:</strong> {{ r.categoria }}</p>
         <p class="mb-2"><strong>Dificultad:</strong> {{ r.dificultad }}</p>
 
-        <a href="{{ url_for('receta_detalle', id=r.id) }}" class="btn btn-outline-dark w-100">
+        <a 
+          href="{{ url_for('receta_detalle', id=r.id) }}" 
+          class="btn w-100"
+          style="
+            border: 2px solid #7a5c3e;
+            color: #7a5c3e;
+            background-color: #f6efe7;
+            font-family: 'Jersey 20', sans-serif;
+          "
+        >
           Preparar
         </a>
+
       </div>
     </div>
   </div>

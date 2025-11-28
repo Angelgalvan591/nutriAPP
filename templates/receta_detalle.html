@@ -1,50 +1,82 @@
 {% extends "base.html" %} {% block content %}
-
-<div class="container">
-  <div class="card border-success shadow">
-    <div
-      class="card-header bg-success text-white"
-      style="font-family: 'Jersey 20'; font-size: 2rem"
-    >
-      {{ receta.nombre }}
+<style>
+  .titulo-receta {
+    font-family: "Jersey 20", sans-serif;
+    font-size: 2.8rem;
+    color: #5c4528;
+  }
+  .card-cafe {
+    background: #f4ece3;
+    border: 2px solid #c7b199;
+  }
+  .seccion-titulo {
+    color: #6b5137;
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin-top: 20px;
+  }
+  .nutri-box {
+    background: #e7d7c3;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    color: #4a3a27;
+  }
+</style>
+<div class="container my-4">
+  <h2 class="text-center titulo-receta mb-4">🦦 {{ receta.nombre }} 🦦</h2>
+  <div class="card shadow card-cafe p-4">
+    <p><strong>Categoría:</strong> {{ receta.categoria }}</p>
+    <p><strong>Dificultad:</strong> {{ receta.dificultad }}</p>
+    <p>{{ receta.descripcion }}</p>
+    <!-- INGREDIENTES -->
+    <h4 class="seccion-titulo">Ingredientes</h4>
+    <ul>
+      {% for ing in ingredientes %}
+      <li>{{ ing.cantidad }} - {{ ing.ingrediente }}</li>
+      {% endfor %}
+    </ul>
+    <!-- PASOS (solo si existen) -->
+    {% if pasos %}
+    <h4 class="seccion-titulo">Pasos</h4>
+    <ol>
+      {% for p in pasos %}
+      <li>{{ p.descripcion }}</li>
+      {% endfor %}
+    </ol>
+    {% endif %}
+    <!-- INFORMACIÓN NUTRICIONAL -->
+    <div class="row text-center mb-3">
+  <div class="col-md-3">
+    <div class="nutri-box">
+      {{ receta.calorias_totales }} kcal
+      <div style="font-size: 0.9rem;">Calorías</div>
     </div>
-
-    <div class="card-body">
-      <p><strong>Categoría:</strong> {{ receta.categoria }}</p>
-      <p><strong>Dificultad:</strong> {{ receta.dificultad }}</p>
-      <p>{{ receta.descripcion }}</p>
-
-      <h5 class="mt-4 text-success">Ingredientes</h5>
-      <ul>
-        {% for ing in ingredientes %}
-        <li>{{ ing.cantidad }} - {{ ing.ingrediente }}</li>
-        {% endfor %}
-      </ul>
-
-      <h5>Pasos</h5>
-      <ol>
-        {% for p in pasos %}
-        <li>{{ p.descripcion }}</li>
-        {% endfor %}
-      </ol>
-
-      <h5 class="mt-4 text-success">Información nutricional</h5>
-      <ul>
-        <li>Calorías: {{ receta.calorias_totales }}</li>
-        <li>Proteínas: {{ receta.proteinas }}</li>
-        <li>Grasas: {{ receta.grasas }}</li>
-        <li>Carbohidratos: {{ receta.carbohidratos }}</li>
-      </ul>
-
-      <button
-        onclick="window.history.back()"
-        class="btn btn-outline-success mt-3"
-      >
-        Volver
-      </button>
-      
+  </div>
+  <div class="col-md-3">
+    <div class="nutri-box">
+      {{ receta.proteinas }} g
+      <div style="font-size: 0.9rem;">Proteína</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="nutri-box">
+      {{ receta.grasas }} g
+      <div style="font-size: 0.9rem;">Grasas</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="nutri-box">
+      {{ receta.carbohidratos }} g
+      <div style="font-size: 0.9rem;">Carbohidratos</div>
     </div>
   </div>
 </div>
 
+    <button onclick="window.history.back()" class="btn btn-outline-dark mt-3">
+      ⬅ Volver
+    </button>
+  </div>
+</div>
 {% endblock %}
