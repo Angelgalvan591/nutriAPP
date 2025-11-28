@@ -542,7 +542,6 @@ def sabermas():
 
 # Sección de calculadoras nutricionales
 @app.route('/calculadoras')
-@login_requerido
 def calculadoras():
     return render_template('calculadoras.html')
 
@@ -634,6 +633,7 @@ def pesoideal():
 
 # Macronutrientes
 @app.route('/macronutrientes', methods=['GET', 'POST'])
+@login_requerido
 def macronutrientes():
     resultado = None
     if request.method == 'POST':

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h1 class="text-success text-uppercase text-center" style="font-family: 'Jersey 20', sans-serif;">
+<h1 class="text-uppercase text-center" style="font-family: 'Jersey 20', sans-serif; color: #1e1a15;">
        🦦 Bienvenido a NutriApp 🦦
       </h1>
 <div class="container my-4 font-monospace" >
@@ -10,7 +10,7 @@
     <div class="col-md-3">
 
       <div class="card mb-3 shadow border border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">
+        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
          ¿Con que funciones cuenta NutriApp?
         </div>
         <div class="card-body">
@@ -26,7 +26,7 @@
       </div>
 
       <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">Nuestro plan de recetas</div>
+        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">Nuestro plan de recetas</div>
         <div class="card-body">
           <p>Estamos trabajando para ampliar nuestra base de datos de recetas saludables aun si eres nuevo cocinando o eres todo un chef experto. Podrás disfrutar de una variedad aún mayor de opciones deliciosas, nutritivas y que requieren pocos o varios ingredientes dependiendo la complejidad.</p>
         </div>
@@ -39,7 +39,7 @@
     <div class="col-md-6">
 
       <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #05c075ff; font-family: 'Jersey 20', sans-serif;">¿Que es NutriApp?</div>
+        <div class="card-header text-white text-uppercase" style="background-color: #bc9c7b; font-family: 'Jersey 20', sans-serif;">¿Que es NutriApp?</div>
         <div class="card-body">
           <div class="text-center mb-3">
           </div>
@@ -51,9 +51,9 @@
       </div>
 
       <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #05c075ff; font-family: 'Jersey 20', sans-serif;">Arte de los Usuarios</div>
+        <div class="card-header text-white text-uppercase" style="background-color: #bc9c7b; font-family: 'Jersey 20', sans-serif;">Arte de los Usuarios</div>
         <div class="card-body text-center">
-          <p>¡Crea tu propio arte! Usa el lienzo para dibujar lo que quieras 💚</p>
+          <p>¡Crea tu propio arte! Usa el lienzo para dibujar lo que quieras 🦦</p>
 
           <!-- Lienzo para dibujar -->
           <div class="">
@@ -61,13 +61,13 @@
           </div>
           <div class="mt-3 d-flex justify-content-center gap-2">
             <button class="btn btn-sm btn-outline-dark" id="limpiarBtn">Limpiar</button>
-            <button class="btn btn-sm btn-outline-success" id="guardarBtn">Guardar</button>
+            <button class="btn btn-sm btn-outline-dark" id="guardarBtn">Guardar</button>
           </div>
         </div>
       </div>
 
       <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #05c075ff; font-family: 'Jersey 20', sans-serif;">Creada por:</div>
+        <div class="card-header text-white text-uppercase" style="background-color: #bc9c7b; font-family: 'Jersey 20', sans-serif;">Creada por:</div>
         <div class="card-body">
           <p>Galvan Diaz Giancarlo Y Wendy Judith Vazquez Ortiz</p>
         </div>
@@ -78,7 +78,7 @@
     <div class="col-md-3">
   {% if usuario_sesion %}
   <div class="card mb-3 border shadow border-dark rounded-0">
-    <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">
+    <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
       ¡Bienvenido, {{ usuario_sesion.nombre }}!
     </div>
     <div class="card-body">
@@ -95,7 +95,7 @@
   {% else %}
 
   <div class="card mb-3 border shadow border-dark rounded-0">
-    <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">
+    <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
       ¿Ya tienes una cuenta?
     </div>
     <div class="card-body">
@@ -114,7 +114,7 @@
 
       
       <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">Informacion del usuario</div>
+        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">Informacion del usuario</div>
         <div class="card-body">
           <p>Tu informacion estra protegida con nosotros, siendo usada solo para ayudarte a lograr tus metas.</p>
           <p>¡Tu salud y privacidad son nuestra prioridad!</p>
@@ -123,7 +123,7 @@
 
 
     <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #000080; font-family: 'Jersey 20', sans-serif;">Contacto</div>
+        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">Contacto</div>
         <div class="card-body">
           <p>Si te comunicas con nosotros por estas redes tienes un 50% más de probabilidad de tener respuesta rápido:</p>
           <ul class="list-unstyled">

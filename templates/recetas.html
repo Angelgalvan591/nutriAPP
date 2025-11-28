@@ -8,22 +8,22 @@
   }
 </style>
 
-<h2 class="text-center titulo-recetas text-success mb-4">Buscador de Recetas</h2>
+<h2 class="text-center titulo-recetas mb-4" style="color: #352c23 ;">🦦 Buscador de Recetas 🦦</h2>
 
 <input type="text" id="buscador" class="form-control mb-4" placeholder="Buscar receta...">
 
 <div class="row" id="recetas-container">
   {% for r in recetas %}
   <div class="col-md-4 mb-4 receta-item">
-    <div class="card shadow border border-success rounded-0">
+    <div class="card shadow border rounded-0">
       <div class="card-body">
-        <h4 class="text-success" style="font-family: 'Jersey 20', sans-serif;">
+        <h4 style="font-family: 'Jersey 20', sans-serif; color: #86694a ;">
           {{ r.nombre }}
         </h4>
         <p class="mb-1"><strong>Categoría:</strong> {{ r.categoria }}</p>
         <p class="mb-2"><strong>Dificultad:</strong> {{ r.dificultad }}</p>
 
-        <a href="{{ url_for('receta_detalle', id=r.id) }}" class="btn btn-outline-success w-100">
+        <a href="{{ url_for('receta_detalle', id=r.id) }}" class="btn btn-outline-dark w-100">
           Preparar
         </a>
       </div>

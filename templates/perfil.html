@@ -5,12 +5,11 @@
   <div>
     <div class="row g-4">
 
-      <!-- COLUMNA IZQUIERDA: INFORMACIÓN PERSONAL -->
+      <!-- INFORMACIÓN PERSONAL -->
       <div class="col-md-5">
-        <div class="border border-dark rounded-3 p-4 position-relative">
+        <div class="border border-dark rounded-3 p-4 position-relative" style="background-color: #c1aa94;">
           <h4 class="text-uppercase mb-3" style="font-family: 'Jersey 20'">Información Personal</h4>
 
-          <!-- BLOQUE MOSTRAR DATOS -->
           <div id="datos-view">
             <p><strong>Nombre:</strong> {{ usuario.nombre }} {{ usuario.apellidos }}</p>
             <p><strong>Edad:</strong> {{ usuario.edad }}</p>
@@ -21,7 +20,7 @@
             <p><strong>Teléfono:</strong> {{ usuario.telefono }}</p>
           </div>
 
-          <!-- BLOQUE FORMULARIO (APARECE EN MISMO LUGAR) -->
+          <!-- Editar -->
           <form action="{{ url_for('editar_usuario') }}" method="POST" id="datos-edit" style="display:none">
 
             <label>Nombre</label>
@@ -49,26 +48,24 @@
             <label>Altura (cm)</label>
             <input type="number" class="form-control mb-2" name="altura" value="{{ usuario.altura }}">
 
-            <button class="btn btn-success w-100 mt-3">Guardar cambios</button>
+            <button class="btn btn-dark w-100 mt-3">Guardar cambios</button>
           </form>
 
-          <!-- BOTÓN EDITAR / CANCELAR -->
-          <button id="btn-editar" class="btn btn-outline-primary w-100 mt-3">Editar</button>
+          <button id="btn-editar" class="btn btn-outline-dark w-100 mt-3">Editar</button>
           <button id="btn-cancelar" class="btn btn-outline-secondary w-100 mt-3" style="display:none;">Cancelar</button>
         </div>
       </div>
 
-      <!-- COLUMNA DERECHA: PREFERENCIAS -->
+      <!-- PREFERENCIAS -->
 <div class="col-md-7">
-  <div class="border border-dark rounded-3 p-4">
+  <div class="border border-dark rounded-3 p-4" style="background-color: #b1967a;">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h4 class="text-uppercase" style="font-family: 'Jersey 20'">
         Preferencias & Alergias
       </h4>
-      <button class="btn btn-success btn-sm" id="btn-add-pref">Editar</button>
+      <button class="btn btn-dark btn-sm" id="btn-add-pref">Editar</button>
     </div>
 
-    <!-- LISTA DE PREFERENCIAS -->
     <div id="lista-preferencias">
       {% if usuario.preferencias_lista %}
         {% for pref in usuario.preferencias_lista %}
@@ -79,11 +76,10 @@
       {% endif %}
     </div>
 
-    <!-- FORMULARIO PARA MODIFICAR PREFERENCIAS -->
+    <!-- MODIFICAR PREFERENCIAS -->
     <form action="{{ url_for('actualizar_preferencias') }}" method="POST"
           id="form-pref" class="mt-3" style="display:none">
 
-      <!-- NIVEL DE ACTIVIDAD -->
       <label class="text-uppercase" style="font-family:'Jersey 20'">
         Nivel de actividad
       </label>
@@ -96,7 +92,6 @@
         <option>Muy activo</option>
       </select>
 
-      <!-- OBJETIVO -->
       <label class="text-uppercase" style="font-family:'Jersey 20'">Objetivo</label>
       <select class="form-select mb-3" name="objetivo">
         <option value="">Sin cambiar</option>
@@ -107,7 +102,6 @@
         <option>Controlar condición</option>
       </select>
 
-      <!-- ALERGIAS NUEVO -->
       <label class="text-uppercase" style="font-family:'Jersey 20'">
         Alergias comunes
       </label>
@@ -121,7 +115,6 @@
         <option>Soja</option>
       </select>
 
-      <!-- EXPERIENCIA -->
       <label class="text-uppercase" style="font-family:'Jersey 20'">
         Experiencia culinaria
       </label>
@@ -132,7 +125,7 @@
         <option>Chef aficionado</option>
       </select>
 
-      <button class="btn btn-success w-100">Guardar</button>
+      <button class="btn btn-dark w-100">Guardar</button>
     </form>
   </div>
 </div>
@@ -147,7 +140,7 @@
   </div>
 </div>
 
-<!-- SCRIPT: EDITAR EN LUGAR -->
+<!-- MOSTRAR FORMULARIO DE EDICIÓN -->
 <script>
   const btnEditar = document.getElementById("btn-editar");
   const btnCancelar = document.getElementById("btn-cancelar");
@@ -169,7 +162,7 @@
   });
 </script>
 
-<!-- SCRIPT: MOSTRAR FORMULARIO DE PREFERENCIAS -->
+<!-- MOSTRAR FORMULARIO DE PREFERENCIAS -->
 <script>
   document.getElementById("btn-add-pref").addEventListener("click", function(){
     const form = document.getElementById("form-pref");
