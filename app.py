@@ -202,7 +202,6 @@ def login_requerido(f):
         return f(*args, **kwargs)
     return wrapper
 
-
 def get_usuario_por_correo(correo):
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT * FROM usuarios WHERE correo = %s", (correo,))
@@ -210,14 +209,12 @@ def get_usuario_por_correo(correo):
     cursor.close()
     return user
 
-
 def get_usuario_por_correo_o_telefono(x):
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT * FROM usuarios WHERE correo = %s OR telefono = %s", (x, x))
     user = cursor.fetchone()
     cursor.close()
     return user
-
 
 @app.context_processor
 def inject_user():
