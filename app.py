@@ -108,11 +108,6 @@ def convertir_a_gramos(texto):
     return cantidad
 
 
-# ------------------------- USDA CACHE -------------------------
-
-cache_usda = {}
-
-
 def obtener_info_ingrediente(ingrediente, cantidad_gramos=100):
     # Valores básicos por 100g
     valores_basicos = {
@@ -235,7 +230,7 @@ def inject_user():
 with app.app_context():
     crear_tabla_usuarios()
     crear_tablas_recetas()
-
+    
 # RUTA PRINCIPOAL
 @app.route('/')
 def index():
