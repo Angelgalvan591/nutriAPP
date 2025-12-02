@@ -23,7 +23,6 @@ SEARCH_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
 DETAIL_URL = "https://api.nal.usda.gov/fdc/v1/food/"
 
 #  BASE DE DATOS 
-
 def crear_tabla_usuarios():
     cursor = mysql.connection.cursor()
     cursor.execute('''
