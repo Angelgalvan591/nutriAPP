@@ -1,38 +1,53 @@
 {% extends "base.html" %}
 {% block content %}
 
-<form class="container my-4 font-monospace" style="max-width: 400px;" method="POST">
-  <div class="border border-dark bg-white p-4 rounded-0">
+<form class="container my-5 font-monospace" style="max-width: 400px;" method="POST">
+  <div class="p-4 shadow border-0" 
+       style="background:#f3e8dc; border-radius:20px; border:2px solid #d5c4b4;">
 
-    <h2 class="text-success text-uppercase mb-4" style="font-family: 'Jersey 20', sans-serif;">
-      Iniciar Sesión
+    <h2 class="text-center text-uppercase mb-4" style="color:#5b4632; font-family: 'Jersey 20', sans-serif;">
+      🔑 Iniciar Sesión
     </h2>
 
     <!-- Usuario/correo/teléfono -->
     <div class="mb-3">
-      <label class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+      <label class="form-label text-uppercase" style="color:#5b4632; font-family: 'Jersey 20', sans-serif;">
         Correo o Teléfono
       </label>
-      <input type="text" class="form-control form-control-sm border border-dark rounded-0"
-        name="nombre" id="username" placeholder="Ingresa tu correo o teléfono" required>
+      <input type="text" class="form-control border-0 shadow-sm" 
+             style="border-radius:10px;" name="nombre" id="username" 
+             placeholder="Ingresa tu correo o teléfono" required>
     </div>
 
     <!-- Contraseña -->
     <div class="mb-3">
-      <label class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
+      <label class="form-label text-uppercase" style="color:#5b4632; font-family: 'Jersey 20', sans-serif;">
         Contraseña
       </label>
-      <input type="password" class="form-control form-control-sm border border-dark rounded-0"
-        name="contraseña" id="password" placeholder="********" required>
+      <input type="password" class="form-control border-0 shadow-sm" 
+             style="border-radius:10px;" name="contraseña" id="password" 
+             placeholder="********" required>
     </div>
 
-    <button type="submit" class="btn btn-sm btn-outline-dark text-uppercase"
-      style="font-family: 'Jersey 20', sans-serif;">
-      Iniciar Sesión
-    </button>
+    <!-- Botón Iniciar Sesión -->
+    <div class="text-center mt-4">
+      <button type="submit" 
+              class="px-5 py-2 text-uppercase fw-bold shadow-sm"
+              style="background:#b89572; color:white; border-radius:30px; border:2px solid #8b6b4a;">
+        Iniciar Sesión
+      </button>
+    </div>
+
+    <!-- Botón Crear Cuenta -->
+    <div class="text-center mt-3">
+      <a href="{{ url_for('crearcuenta') }}" 
+         class="px-4 py-2 text-uppercase fw-bold shadow-sm d-inline-block"
+         style="background:#8b6b4a; color:white; border-radius:30px; border:2px solid #5b4632; text-decoration:none;">
+        ¿No tienes cuenta? Crear Cuenta
+      </a>
+    </div>
 
   </div>
 </form>
 
 {% endblock %}
-

@@ -1,144 +1,75 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1 class="text-uppercase text-center" style="font-family: 'Jersey 20', sans-serif; color: #1e1a15;">
-  🦦 Bienvenido a NutriApp 🦦
-</h1>
+<div class="container my-4" style="font-family:'Jersey 20';">
 
-<div class="container my-4 font-monospace">
-  <div class="row g-3">
+  <!-- TÍTULO -->
+  <h1 class="text-center text-uppercase" style="color:#5b4632;">
+    🦦 NutriApp — Tu Zona Nutrimiau 🍂
+  </h1>
+  <p class="text-center mb-4" style="color:#7a6146;">
+    Un espacio suavecito, nutritivo y lleno de ternura.
+  </p>
 
-    <!-- Columna izquierda -->
-    <div class="col-md-3">
+  <!-- ¿QUÉ ES NUTRIAPP? -->
+  <div class="card mb-4 shadow border-0" style="background:#eadfce; border-radius:15px;">
+    <div class="card-header text-center text-uppercase text-white"
+         style="background:#b89572; font-size:1.7rem; border-radius:15px 15px 0 0;">
+      ¿Qué es NutriApp?
+    </div>
+    <div class="card-body" style="color:#5b4632;">
+      <p>NutriApp es tu compañero nutricional pensado para ayudarte sin estresarte.</p>
+      <p>Controla tus calorías, consulta recetas saludables, analiza tus ingredientes y diviértete creando arte mientras cuidas tu salud.</p>
+      <p>Todo es gratis, accesible y seguro para ti.</p>
+    </div>
+  </div>
 
-      <div class="card mb-3 shadow border border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
-          ¿Con qué funciones cuenta NutriApp?
+  <!-- 3 COLUMNAS PRINCIPALES -->
+  <div class="row g-4">
+
+    <!-- COLUMNA IZQUIERDA -->
+    <div class="col-md-4">
+
+      <!-- Card 1 -->
+      <div class="card shadow border-0 mb-3" style="background:#f3e8dc; border-radius:15px;">
+        <div class="card-header text-center text-uppercase text-white"
+             style="background:#8b6b4a; font-size:1.6rem; border-radius:15px 15px 0 0;">
+          Antes de usar NutriApp ✨
         </div>
-        <div class="card-body">
-          <p>NutriApp te ofrece las siguientes funciones:</p>
-          <ul>
-            <li>Contador de calorías</li>
-            <li>Calculadora de gasto energético</li>
-            <li>Recetas saludables</li>
-            <li>Artículos informativos</li>
-            <li>Lienzo interactivo para crear arte</li>
+        <div class="card-body" style="color:#5b4632;">
+          <ul style="padding-left:20px;">
+            <li>Las calorías son aproximadas 🍪</li>
+            <li>La salud es constancia 💗</li>
+            <li>Ve a tu ritmo 🌱</li>
+            <li>Pequeños avances importan ⭐</li>
           </ul>
         </div>
       </div>
 
-      <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
-          Nuestro plan de recetas
+      <!-- Card 2 -->
+      <div class="card shadow border-0 mb-3" style="background:#f3e8dc; border-radius:15px;">
+        <div class="card-header text-center text-uppercase text-white"
+             style="background:#b89572; font-size:1.6rem; border-radius:15px 15px 0 0;">
+          Información importante 📌
         </div>
-        <div class="card-body">
-          <p>Estamos trabajando para ampliar nuestra base de datos de recetas saludables. Ya seas nuevo cocinando o un chef experto, encontrarás una variedad nutritiva para todos los niveles.</p>
-        </div>
-      </div>
-
-      <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
-          Analizador de Recetas Personalizadas
-        </div>
-        <div class="card-body">
-          <p>¿Tienes una receta favorita que te gustaría evaluar? Ingresa tus ingredientes y te diremos el valor nutricional.</p>
-          <p>¡Prueba el Analizador de Recetas hoy!</p>
-          <div class="d-grid gap-2">
-            <a href="{{ url_for('analizador') }}" class="btn btn-sm btn-outline-dark text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
-              Ir al Analizador de Recetas
-            </a>
-          </div>
+        <div class="card-body" style="color:#5b4632;">
+          <ul style="padding-left:20px;">
+            <li>No compartimos tus datos 🔒</li>
+            <li>100% gratuito 🤎</li>
+            <li>Tu información es segura 🛡️</li>
+            <li>Te ayudamos sin juzgar 💕</li>
+          </ul>
         </div>
       </div>
 
-    </div> <!-- Columna izquierda -->
-
-    <!-- Columna central -->
-    <div class="col-md-6">
-
-      <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #bc9c7b; font-family: 'Jersey 20', sans-serif;">
-          ¿Qué es NutriApp?
+      <!-- Card 3 -->
+      <div class="card shadow border-0" style="background:#f3e8dc; border-radius:15px;">
+        <div class="card-header text-center text-uppercase text-white"
+             style="background:#b89572; font-size:1.6rem; border-radius:15px 15px 0 0;">
+          Contáctanos 💌
         </div>
-        <div class="card-body">
-          <p>
-            NutriApp busca ser una alternativa gratuita a las apps nutricionales de pago. 
-            Podrás llevar el control de tus calorías, conocer tu gasto energético diario, ver recetas saludables y divertirte dibujando en un lienzo interactivo.
-          </p>
-          <p>Todo sin costo. Creemos que la salud debe ser accesible para todos.</p>
-        </div>
-      </div>
-
-      <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #bc9c7b; font-family: 'Jersey 20', sans-serif;">
-          Arte de los Usuarios
-        </div>
-        <div class="card-body text-center">
-          <p>¡Crea tu propio arte! Usa el lienzo para dibujar lo que quieras 🦦</p>
-
-          <canvas id="dibujo" width="400" height="300" style="border: 2px solid #000; background-color:white; cursor:crosshair;"></canvas>
-
-          <div class="mt-3 d-flex justify-content-center gap-2">
-            <button class="btn btn-sm btn-outline-dark" id="limpiarBtn">Limpiar</button>
-            <button class="btn btn-sm btn-outline-dark" id="guardarBtn">Guardar</button>
-          </div>
-        </div>
-      </div>
-
-    </div> <!-- Columna central -->
-
-    <!-- Columna derecha -->
-    <div class="col-md-3">
-
-      {% if usuario_sesion %}
-      <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
-          ¡Bienvenido, {{ usuario_sesion.nombre }}!
-        </div>
-        <div class="card-body">
-          <p class="mb-2">Nos alegra verte de nuevo 😊</p>
-          <p>Explora tus recetas, revisa tu progreso o consulta tu perfil.</p>
-          <a href="{{ url_for('perfil') }}" class="btn btn-sm btn-outline-success text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
-            Ir a mi perfil
-          </a>
-        </div>
-      </div>
-
-      {% else %}
-      <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
-          ¿Ya tienes una cuenta?
-        </div>
-        <div class="card-body">
-          <p>Inicia sesión para más funciones.</p>
-          <div class="d-grid gap-2">
-            <a href="{{ url_for('iniciosesion') }}" class="btn btn-sm btn-outline-dark text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
-              Iniciar sesión
-            </a>
-            <a href="{{ url_for('crearcuenta') }}" class="btn btn-sm btn-outline-secondary text-uppercase" style="font-family: 'Jersey 20', sans-serif;">
-              Registrarse
-            </a>
-          </div>
-        </div>
-      </div>
-      {% endif %}
-
-      <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
-          Información del usuario
-        </div>
-        <div class="card-body">
-          <p>Tu información está segura y solo se usa para ayudarte en tus objetivos.</p>
-        </div>
-      </div>
-
-      <div class="card mb-3 border shadow border-dark rounded-0">
-        <div class="card-header text-white text-uppercase" style="background-color: #846b51; font-family: 'Jersey 20', sans-serif;">
-          Contacto
-        </div>
-        <div class="card-body">
-          <p>Contáctanos por estas redes:</p>
-          <ul class="list-unstyled">
+        <div class="card-body" style="color:#5b4632;">
+          <ul style="padding-left:20px;">
             <li><a href="https://www.facebook.com/angel.galvan.37550">Facebook de Angel</a></li>
             <li><a href="https://www.facebook.com/yui.chan.uwu.awuadecanela">Facebook de Judith</a></li>
             <li><a href="https://www.instagram.com/justt_ang17/">Instagram de Angel</a></li>
@@ -147,46 +78,147 @@
         </div>
       </div>
 
-    </div> <!-- Columna derecha -->
+    </div>
 
-  </div> <!-- row -->
-</div> <!-- container -->
+    <!-- COLUMNA CENTRAL (ARTE) -->
+    <div class="col-md-4">
 
+      <div class="card shadow border-0" style="background:#eadfce; border-radius:15px;">
+        <div class="card-header text-center text-uppercase text-white"
+             style="background:#b89572; font-size:1.6rem; border-radius:15px 15px 0 0;">
+          🎨 Zona Creativa — Arte Nutrimiau
+        </div>
+        <div class="card-body text-center" style="color:#5b4632;">
 
+          <p>Relájate y dibuja algo bonito 🧁✨</p>
+
+          <canvas id="dibujo" width="300" height="250"
+                  style="border:3px dashed #b89572; border-radius:10px; background:white; cursor:crosshair;"></canvas>
+
+          <div class="mt-3 d-flex justify-content-center gap-2">
+            <button id="limpiarBtn" class="btn btn-sm btn-outline-dark px-4">Limpiar</button>
+            <button id="guardarBtn" class="btn btn-sm btn-outline-dark px-4">Guardar</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COLUMNA DERECHA -->
+    <div class="col-md-4">
+
+      <!-- Sí y No -->
+      <div class="card shadow border-0 mb-3" style="background:#f3e8dc; border-radius:15px;">
+        <div class="card-header text-center text-uppercase text-white"
+             style="background:#8b6b4a; font-size:1.6rem; border-radius:15px 15px 0 0;">
+          Sí y No de NutriApp 🍂
+        </div>
+        <div class="card-body" style="color:#5b4632;">
+          <h6 class="fw-bold">Sí puedes 💖</h6>
+          <ul style="padding-left:20px;">
+            <li>Buscar recetas saludables</li>
+            <li>Analizar ingredientes</li>
+            <li>Guardar progresos</li>
+            <li>Usar la zona creativa</li>
+          </ul>
+
+          <h6 class="fw-bold mt-3">Evita ❌</h6>
+          <ul style="padding-left:20px;">
+            <li>Compararte</li>
+            <li>Obsesionarte</li>
+            <li>Saltarte comidas</li>
+            <li>Dietas extremas</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Analizador -->
+      <div class="card shadow border-0" style="background:#f3e8dc; border-radius:15px;">
+        <div class="card-header text-center text-uppercase text-white"
+             style="background:#8b6b4a; font-size:1.6rem; border-radius:15px 15px 0 0;">
+          Analizador Nutricional 🧁
+        </div>
+        <div class="card-body" style="color:#5b4632;">
+          <p>Ingresa tus ingredientes y te damos su información nutricional.</p>
+          <a href="{{ url_for('analizador') }}" class="btn btn-sm btn-outline-dark w-100 rounded-pill">
+            Ir al Analizador
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </div> <!-- /row -->
+
+  <hr class="my-4" style="border:1px solid #f8c68f;">
+
+  <!-- FUNCIONES -->
+  <div class="row g-4 mb-4">
+
+    <div class="col-md-4">
+      <div class="card shadow border-0" style="background:#f3e8dc; border-radius:15px;">
+        <div class="card-header text-center text-white" style="background:#8b6b4a;">
+          Contador Calórico 🔥
+        </div>
+        <div class="card-body" style="color:#5b4632;">
+          <p>Consulta tus calorías diarias estimadas.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow border-0" style="background:#f3e8dc; border-radius:15px;">
+        <div class="card-header text-center text-white" style="background:#8b6b4a;">
+          Recetario Saludable 🍽️
+        </div>
+        <div class="card-body" style="color:#5b4632;">
+          <p>Recetas nutritivas con calorías automáticas.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow border-0" style="background:#f3e8dc; border-radius:15px;">
+        <div class="card-header text-center text-white" style="background:#8b6b4a;">
+          Más Herramientas 🧡
+        </div>
+        <div class="card-body" style="color:#5b4632;">
+          <p>Calculadoras de IMC, gasto energético y más.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- CANVAS SCRIPT -->
 <script>
   const canvas = document.getElementById("dibujo");
   const ctx = canvas.getContext("2d");
-  let dibujando = false;
+  let dib = false;
 
-  canvas.addEventListener("mousedown", e => {
-    dibujando = true;
-    ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
-  });
+  canvas.onmousedown = e => { dib = true; ctx.beginPath(); ctx.moveTo(e.offsetX, e.offsetY); }
+  canvas.onmouseup = () => dib = false;
+  canvas.onmouseleave = () => dib = false;
 
-  canvas.addEventListener("mousemove", e => {
-    if (dibujando) {
+  canvas.onmousemove = e => {
+    if (dib) {
       ctx.lineTo(e.offsetX, e.offsetY);
-      ctx.strokeStyle = "black";
+      ctx.strokeStyle = "#5b4632";
       ctx.lineWidth = 2;
       ctx.lineCap = "round";
       ctx.stroke();
     }
-  });
+  };
 
-  canvas.addEventListener("mouseup", () => dibujando = false);
-  canvas.addEventListener("mouseleave", () => dibujando = false);
-
-  document.getElementById("limpiarBtn").addEventListener("click", () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  });
-
-  document.getElementById("guardarBtn").addEventListener("click", () => {
-    const enlace = document.createElement("a");
-    enlace.download = "mi_dibujo.jpg";
-    enlace.href = canvas.toDataURL();
-    enlace.click();
-  });
+  document.getElementById("limpiarBtn").onclick = () => ctx.clearRect(0,0,canvas.width,canvas.height);
+  document.getElementById("guardarBtn").onclick = () => {
+    const link = document.createElement("a");
+    link.download = "mi_dibujo_nutriapp.jpg";
+    link.href = canvas.toDataURL();
+    link.click();
+  };
 </script>
 
 {% endblock %}

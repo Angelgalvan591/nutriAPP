@@ -1,79 +1,94 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="container my-5 font-monospace" style="max-width: 700px">
-  <div class="border border-dark bg-white p-5 rounded-3 shadow">
-    <h2 class="text-center text-success text-uppercase mb-4" style="font-family: 'Jersey 20', sans-serif">
-      Crear Cuenta
+<div class="container my-5" style="max-width: 700px; font-family:'Jersey 20';">
+
+  <!-- CARD PRINCIPAL -->
+  <div class="p-4 shadow border-0" 
+       style="background:#f3e8dc; border-radius:20px; border:2px solid #d5c4b4;">
+
+    <!-- TÍTULO -->
+    <h2 class="text-center text-uppercase mb-4"
+        style="color:#5b4632; font-size:2rem;">
+      🌿 Crear Cuenta — NutriApp 🌿
     </h2>
 
     <form method="POST">
 
       <!-- Nombre -->
-      <div class="text-center mb-3">
-        <label for="nombre" class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif">
+      <div class="mb-3">
+        <label for="nombre" class="form-label text-uppercase" style="color:#5b4632;">
           Nombre
         </label>
-        <input type="text" class="form-control border border-dark rounded-1" name="nombre" id="nombre"
-          placeholder="Tu nombre" required />
+        <input type="text" class="form-control border-0 shadow-sm"
+               style="border-radius:10px;" name="nombre" id="nombre"
+               placeholder="Tu nombre bonito" required />
       </div>
 
       <!-- Apellidos -->
       <div class="row g-3 mt-2">
         <div class="col-md-6">
-          <label class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif">Apellido Paterno</label>
-          <input type="text" class="form-control border border-dark rounded-1" id="paterno" name="paterno"
-            placeholder="Apellido Paterno" required />
+          <label class="form-label text-uppercase" style="color:#5b4632;">Apellido Paterno</label>
+          <input type="text" class="form-control border-0 shadow-sm"
+                 style="border-radius:10px;" id="paterno" name="paterno"
+                 placeholder="Apellido Paterno" required />
         </div>
 
         <div class="col-md-6">
-          <label class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif">Apellido Materno</label>
-          <input type="text" class="form-control border border-dark rounded-1" id="materno" name="materno"
-            placeholder="Apellido Materno" required />
+          <label class="form-label text-uppercase" style="color:#5b4632;">Apellido Materno</label>
+          <input type="text" class="form-control border-0 shadow-sm"
+                 style="border-radius:10px;" id="materno" name="materno"
+                 placeholder="Apellido Materno"/>
         </div>
       </div>
 
-      <!-- Email y Teléfono -->
+      <!-- Email / Teléfono -->
       <div class="row g-3 mt-2">
         <div class="col-md-6">
-          <label class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif">Correo electrónico</label>
-          <input type="email" class="form-control border border-dark rounded-1" name="correo" id="correo"
-            placeholder="ejemplo@correo.com" required />
+          <label class="form-label text-uppercase" style="color:#5b4632;">Correo electrónico</label>
+          <input type="email" class="form-control border-0 shadow-sm"
+                 style="border-radius:10px;" name="correo" id="correo"
+                 placeholder="ejemplo@correo.com" required />
         </div>
 
         <div class="col-md-6">
-          <label class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif">Teléfono</label>
-          <input type="tel" class="form-control border border-dark rounded-1" name="telefono" id="telefono"
-            placeholder="+52 000 000 0000" required />
+          <label class="form-label text-uppercase" style="color:#5b4632;">Teléfono</label>
+          <input type="tel" class="form-control border-0 shadow-sm"
+                 style="border-radius:10px;" name="telefono" id="telefono"
+                 placeholder="+52 000 000 0000" required />
         </div>
       </div>
 
       <!-- Contraseñas -->
       <div class="row g-3 mt-2">
         <div class="col-md-6">
-          <label class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif">Contraseña</label>
-          <input type="password" class="form-control border border-dark rounded-1" name="contraseña" id="contraseña"
-            placeholder="********" required />
+          <label class="form-label text-uppercase" style="color:#5b4632;">Contraseña</label>
+          <input type="password" class="form-control border-0 shadow-sm"
+                 style="border-radius:10px;" name="contraseña" id="contraseña"
+                 placeholder="********" required />
         </div>
 
         <div class="col-md-6">
-          <label class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif">Confirmar contraseña</label>
-          <input type="password" class="form-control border border-dark rounded-1" name="confirmarcontraseña"
-            id="confirmarcontraseña" placeholder="********" required />
+          <label class="form-label text-uppercase" style="color:#5b4632;">Confirmar contraseña</label>
+          <input type="password" class="form-control border-0 shadow-sm"
+                 style="border-radius:10px;" name="confirmarcontraseña"
+                 id="confirmarcontraseña" placeholder="********" required />
         </div>
       </div>
 
       <!-- Datos físicos -->
       <div class="row g-3 mt-3">
         <div class="col-md-3">
-          <label class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif">Edad</label>
-          <input type="number" class="form-control border border-dark rounded-1" name="edad" id="edad"
-            placeholder="Años" />
+          <label class="form-label text-uppercase" style="color:#5b4632;">Edad</label>
+          <input type="number" class="form-control border-0 shadow-sm"
+                 style="border-radius:10px;" name="edad" id="edad"
+                 placeholder="Años" />
         </div>
 
         <div class="col-md-3">
-          <label class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif">Sexo</label>
-          <select class="form-select border border-dark rounded-1" id="sexo" name="sexo">
+          <label class="form-label text-uppercase" style="color:#5b4632;">Sexo</label>
+          <select class="form-select border-0 shadow-sm" 
+                  style="border-radius:10px;" id="sexo" name="sexo">
             <option value="">Seleccionar</option>
             <option>Femenino</option>
             <option>Masculino</option>
@@ -82,23 +97,26 @@
         </div>
 
         <div class="col-md-3">
-          <label class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif">Peso (kg)</label>
-          <input type="number" class="form-control border border-dark rounded-1" id="peso" name="peso"
-            placeholder="Ej. 60" required />
+          <label class="form-label text-uppercase" style="color:#5b4632;">Peso (kg)</label>
+          <input type="number" class="form-control border-0 shadow-sm"
+                 style="border-radius:10px;" id="peso" name="peso"
+                 placeholder="Ej. 60" required />
         </div>
 
         <div class="col-md-3">
-          <label class="form-label text-uppercase" style="font-family: 'Jersey 20', sans-serif">Altura (cm)</label>
-          <input type="number" class="form-control border border-dark rounded-1" id="altura" name="altura"
-            placeholder="Ej. 165" required />
+          <label class="form-label text-uppercase" style="color:#5b4632;">Altura (cm)</label>
+          <input type="number" class="form-control border-0 shadow-sm"
+                 style="border-radius:10px;" id="altura" name="altura"
+                 placeholder="Ej. 165" required />
         </div>
       </div>
 
       <!-- Botón -->
       <div class="text-center mt-5">
-        <button type="submit" class="btn btn-outline-success px-5 py-2 text-uppercase fw-bold border-2 rounded-2"
-          style="font-family: 'Jersey 20', sans-serif">
-          Crear cuenta
+        <button type="submit" 
+                class="px-5 py-2 text-uppercase fw-bold shadow-sm"
+                style="background:#b89572; color:white; border-radius:30px; border:2px solid #8b6b4a;">
+          Crear Cuenta ✨
         </button>
       </div>
 

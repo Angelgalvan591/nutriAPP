@@ -8,7 +8,7 @@ from functools import wraps
 
 app = Flask(__name__)
 
-# --------------------------- CONFIG ---------------------------
+#  CONFIG DE LA API Y BASE DE DATOS
 
 app.config['SECRET_KEY'] = 'una_clave_secreta_muy_larga_y_compleja_1234567890'
 app.config['MYSQL_HOST'] = 'localhost'
@@ -22,7 +22,7 @@ USDA_API_KEY = "ESPULNEPTXufMneVYTlvu1SIXdiOr6Xl1dZJ0AZ5"
 SEARCH_URL = "https://api.nal.usda.gov/fdc/v1/foods/search"
 DETAIL_URL = "https://api.nal.usda.gov/fdc/v1/food/"
 
-# --------------------------- UTILIDADES ---------------------------
+#  BASE DE DATOS 
 
 def crear_tabla_usuarios():
     cursor = mysql.connection.cursor()
@@ -131,7 +131,6 @@ def obtener_info_ingrediente(ingrediente, cantidad_gramos=100):
     }
     
     try:
-        # Intentar API primero
         search_params = {
             "api_key": USDA_API_KEY,
             "query": ingrediente,
@@ -176,7 +175,6 @@ def obtener_info_ingrediente(ingrediente, cantidad_gramos=100):
     except:
         pass
     
-    # Usar valores básicos
     ing_lower = ingrediente.lower().strip()
     valores = valores_basicos.get(ing_lower)
     
@@ -200,9 +198,7 @@ def obtener_info_ingrediente(ingrediente, cantidad_gramos=100):
         "carbohidratos": round(valores["carb"] * factor, 2)
     }
 
-
-# ----------------------- AUTH & SESIÓN -----------------------
-
+# autenticación y gestión de usuarios
 def login_requerido(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
@@ -235,20 +231,17 @@ def inject_user():
         return dict(usuario_sesion=get_usuario_por_correo(session["usuario_correo"]))
     return dict(usuario_sesion=None)
 
-
-# ------------------------- INIT DB -------------------------
-
+# INIT DB
 with app.app_context():
     crear_tabla_usuarios()
     crear_tablas_recetas()
 
-# --------------------------- RUTAS PRINCIPALES ---------------------------
-
+# RUTA PRINCIPOAL
 @app.route('/')
 def index():
     return render_template('index.html')
 
-
+# CREAR CUENTA E INICIO DE SESIÓN
 @app.route('/crearcuenta', methods=['GET', 'POST'])
 def crearcuenta():
     if request.method == 'POST':
@@ -278,12 +271,15 @@ def crearcuenta():
         mysql.connection.commit()
         cursor.close()
 
-        flash("Cuenta creada correctamente.", "success")
-        return redirect(url_for('iniciosesion'))
+        session['usuario_correo'] = correo
+
+        flash("Cuenta creada correctamente. ¡Bienvenido!", "success")
+        return redirect(url_for('perfil'))
 
     return render_template('crearcuenta.html')
 
 
+# INICIO DE SESIÓN
 @app.route('/iniciosesion', methods=['GET', 'POST'])
 def iniciosesion():
     if request.method == 'POST':
@@ -299,14 +295,14 @@ def iniciosesion():
 
     return render_template('iniciosesion.html')
 
-
+# CERRAR SESIÓN
 @app.route('/cerrarsesion')
 def cerrarsesion():
     session.pop('usuario_correo', None)
     flash("Sesión cerrada.", "info")
     return redirect(url_for('index'))
 
-
+# PERFIL DE USUARIO
 @app.route('/perfil')
 @login_requerido
 def perfil():
@@ -315,7 +311,7 @@ def perfil():
     user["preferencias_lista"] = [p for p in prefs.split(";") if p]
     return render_template("perfil.html", usuario=user)
 
-
+# ACTUALIZAR PREFERENCIAS
 @app.route('/actualizar_preferencias', methods=['POST'])
 @login_requerido
 def actualizar_preferencias():
@@ -344,7 +340,7 @@ def actualizar_preferencias():
     flash("Preferencias actualizadas.", "success")
     return redirect(url_for("perfil"))
 
-
+# AÑADIR PREFERENCIA
 @app.route('/añadir_preferencia', methods=['POST'])
 @login_requerido
 def añadir_preferencia():
@@ -370,7 +366,7 @@ def añadir_preferencia():
     flash("Preferencia añadida.", "success")
     return redirect(url_for("perfil"))
 
-
+# EDITAR DATOS DE USUARIO
 @app.route('/editar_usuario', methods=['POST'])
 @login_requerido
 def editar_usuario():
@@ -400,8 +396,7 @@ def editar_usuario():
     return redirect(url_for("perfil"))
 
 
-# --------------------------- RECETAS ---------------------------
-
+# RECETAS 
 @app.route('/recetas')
 def recetas():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -448,8 +443,7 @@ def receta_detalle(id):
     )
 
 
-# ---------------- ANALIZADOR ----------------
-
+#  ANALIZADOR DE INGREDIENTES 
 @app.route('/analizador', methods=['GET', 'POST'])
 @login_requerido
 def analizador():
@@ -480,7 +474,7 @@ def analizador():
 
     return render_template("analizador.html", mostrar_resultado=False)
 
-
+# GUARDAR RECETA PERSONALIZADA
 @app.route("/guardar_receta_personalizada", methods=["POST"])
 @login_requerido
 def guardar_receta_personalizada():
@@ -520,19 +514,17 @@ def guardar_receta_personalizada():
     flash("Receta creada correctamente.", "success")
     return redirect(url_for("recetas"))
 
-
-# ---------------- SECCIONES ----------------
-
+# INFORMACIÓN NUTRICIONAL
 @app.route('/sabermas')
 def sabermas():
     return render_template('sabermas.html')
 
-
+# CALCULADORAS NUTRICIONALES
 @app.route('/calculadoras')
 def calculadoras():
     return render_template('calculadoras.html')
 
-
+# IMC
 @app.route('/imc', methods=['GET', 'POST'])
 def imc():
     resultado = None
@@ -554,7 +546,7 @@ def imc():
 
     return render_template('imc.html', resultado=resultado)
 
-
+# TMB
 @app.route('/tmb', methods=['GET', 'POST'])
 def tmb():
     resultado = None
@@ -573,7 +565,7 @@ def tmb():
 
     return render_template('tmb.html', resultado=resultado)
 
-
+# GCT
 @app.route('/gct', methods=['GET', 'POST'])
 def gct():
     resultado = None
@@ -583,7 +575,7 @@ def gct():
         resultado = f"Tu Gasto Calórico Total es {tmb * actividad:.2f} calorías/día"
     return render_template('gct.html', resultado=resultado)
 
-
+# PESO IDEAL
 @app.route('/pesoideal', methods=['GET', 'POST'])
 def pesoideal():
     resultado = None
@@ -596,7 +588,7 @@ def pesoideal():
 
     return render_template('pesoideal.html', resultado=resultado)
 
-
+# MACRONUTRIENTES
 @app.route('/macronutrientes', methods=['GET', 'POST'])
 @login_requerido
 def macronutrientes():
@@ -609,9 +601,6 @@ def macronutrientes():
         resultado = f"Proteínas: {proteinas:.1f}g | Grasas: {grasas:.1f}g | Carbohidratos: {carb:.1f}g"
 
     return render_template('macronutrientes.html', resultado=resultado)
-
-
-# --------------------------- MAIN ---------------------------
 
 if __name__ == '__main__':
     app.run(debug=True)
